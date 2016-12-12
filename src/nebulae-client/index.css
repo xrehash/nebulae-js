@@ -1,0 +1,50 @@
+body{
+    font-size: 14pt;
+    font-family:'Halant', serif ;
+}
+#screen{
+    background-color:rgba(220,230,240,0.3);
+    padding: 16px;
+}
+#screenMenu{
+}
+#mast{
+    background-color: rgba(200,160,80,1);
+    color:white;
+    background-image: url('resources/nebulae-crop.jpg');
+    border-bottom: 0.5pt solid rgb(120,120 ,120);
+    border-collapse: collapse;
+}
+#banner{
+    height:80px;
+    font-family: 'Gabriela',Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: 500;
+    font-size: 48pt;    
+}
+#header{
+    font-family: 'Gruppo',Arial, cursive;
+    font-weight: 500;
+    font-size: 28pt;
+    background-color: rgba(50,50,50,0.710);
+}
+#middleBlock{
+    min-height: 100px;
+    background-color: rgb(255,255,255);
+    border: 0.25pt solid rgb(120,120 ,120);
+    border-collapse: collapse;
+}
+#page{
+    font-size: 10pt;
+}
+#sideBar{
+    border-left: 0.25pt solid rgb(120,120 ,120);
+    border-collapse: collapse;
+    /*background-color: rgb(220,220 ,220);
+    border: 0.5pt solid rgb(120,120 ,120);
+    border-collapse: collapse;*/
+}
+#footer{
+    border: 0.25pt solid rgb(120,120 ,120);
+    border-collapse: collapse;
+    font-size:70%;
+}
