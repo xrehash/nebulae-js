@@ -13,6 +13,10 @@
     "tests"
   ],
   "dependencies": {
-    "jquery": "^3.1.1"
+    "jquery": "^3.1.1",
+    "knockout": "^3.4.1",
+    "text": "^2.0.15",
+    "system.js": "^0.19.41",
+    "bootstrap": "^3.3.7"
   }
 }

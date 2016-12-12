@@ -9,13 +9,16 @@ require('lib/jquery.event.gevent.js');
 var zApp = function(){
     var self = this;
     self.Router = Router;
+
     self.start = function(){
         console.log('starting app');
         window.ko = ko;
         ko.applyBindings(self,document.getElementById('body'));
         self.Router.navigate('home');
     };
+    
     self.PageTitle = ko.observable("");
+
     self.present = function(comp){
         var view = 'components/'+comp+'/view.html'; 
         var model = 'components/'+comp+'/model.js';
@@ -36,8 +39,6 @@ var zApp = function(){
         req.error = function(obj,err){
             console.log(arguments);
         };
-        
-        
     };
 };
 
