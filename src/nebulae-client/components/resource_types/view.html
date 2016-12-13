@@ -1,0 +1,20 @@
+<div class="component container-fluid">
+  <div class="row">
+    <div class="col-sm-5 panel panel panel-info">
+      <h2 class="heading">Create Resource Type</h2>
+      <form action="POST" target="">
+        <dl class="form" data-bind="with:newResourceType">
+          <dt>_id</dt>
+          <dd><em name="resourceType._id" data-bind="text:_id"></em></dd>
+          <dt>Name</dt>
+          <dd><input name="resourceType.name" type="text" data-bind="value:name" /></dd>
+          <dt>Parent</dt>
+          <dd><select name="resourceType.parent" data-bind="value:parent,optionsText:'name',optionsValue:'id',options:$parent.listResourceTypes"></select></dd>
+          <dt>Schema</dt>
+          <dd><textarea name="resourceType.schema" data-bind="value:schema"></textarea></dd>
+        </dl>
+        <button data-bind="click:saveForm"><em class="fa fa-save"></em> save</button>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,41 +1,44 @@
 <!DOCTYPE html>
-<html> 
-    <head>
-        <title>Nebulae</title>
-        <link href="https://fonts.googleapis.com/css?family=Comfortaa|Gabriela|Gruppo|Halant|Taviraj" type="text/css" rel="stylesheet">
-        <link rel='stylesheet' href="bower_components/bootstrap/dist/css/bootstrap.css" />
-        <link rel='stylesheet' href="bower_components/bootstrap/dist/css/bootstrap-theme.css" />
-        <link rel='stylesheet' href="index.css" />
-    </head>
-    <body id="body">
-        <div id="screen" class="container">
-            
-            <div id="mast" class="row">
-                <div id="screenMenu" class="">             
-                </div>
-                <div id="banner">
-                    <hi>Nebulae</hi>
-                </div>
-                <div id="header">
-                    <div id="titleBlock" data-bind="text:PageTitle">PageTitle</div>
-                </div>
+<html>
+
+<head>
+    <title>Nebulae</title>
+    <link href="https://fonts.googleapis.com/css?family=Raleway|Comfortaa|Gabriela|Gruppo|Halant|Fjalla+One" type="text/css"
+        rel="stylesheet">
+    <link rel='stylesheet' href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel='stylesheet' href="bower_components/bootstrap/dist/css/bootstrap-theme.css" />
+    <link rel='stylesheet' href="bower_components\font-awesome\css\font-awesome.min.css" />
+    <link rel='stylesheet' href="index.css" />
+</head>
+
+<body id="body">
+    <div id="screen" class="container">
+        <div id="mast" class="row">
+            <div id="screenMenu" class="">
             </div>
-            <div id="middleBlock" class="row">
+            <div id="banner">
+                <hi>Nebulae</hi>
+            </div>
+            <div id="header">
+                <div id="titleBlock" data-bind="text:PageTitle">PageTitle</div>
+            </div>
+        </div>
+        <div id="middleBlock" class="row">
             <div id="page" class="col-md-10">
-                
             </div>
             <aside id="sideBar" class="col-lg-2 col-xs-12">
             </aside>
-            </div>
-            <div id="footer" class="row">
-                <div id="contact" class="col-md-4"></div>
-                <div class="copyright">Copyright &copy; JPSCo. Ltd.</div>
-            </div>
         </div>
-        <script src="bower_components/system.js/dist/system.js"></script>
-        <script src="sys.js"></script>
-        <script>
-            SystemJS.import('app.js');            
-        </script>
-    </body>
+        <div id="footer" class="row">
+            <div id="contact" class="col-md-4"></div>
+            <div class="copyright">Copyright &copy; JPSCo. Ltd.</div>
+        </div>
+    </div>
+    <script src="bower_components/system.js/dist/system.js"></script>
+    <script src="sys.js"></script>
+    <script>
+        SystemJS.import('app.js');
+    </script>
+</body>
+
 </html>

@@ -1,50 +1,86 @@
-body{
+body {
     font-size: 14pt;
-    font-family:'Halant', serif ;
+    font-family: 'Halant', serif;
 }
-#screen{
-    background-color:rgba(220,230,240,0.3);
+
+#screen {
+    background-color: rgba(220, 230, 240, 0.3);
     padding: 16px;
 }
-#screenMenu{
-}
-#mast{
-    background-color: rgba(200,160,80,1);
-    color:white;
+
+#screenMenu {}
+
+#mast {
+    background-color: rgba(200, 160, 80, 1);
+    color: white;
     background-image: url('resources/nebulae-crop.jpg');
-    border-bottom: 0.5pt solid rgb(120,120 ,120);
+    border-bottom: 0.5pt solid rgb(120, 120, 120);
     border-collapse: collapse;
 }
-#banner{
-    height:80px;
-    font-family: 'Gabriela',Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
+#banner {
+    height: 80px;
+    font-family: 'Gabriela', Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     font-weight: 500;
-    font-size: 48pt;    
+    font-size: 48pt;
 }
-#header{
-    font-family: 'Gruppo',Arial, cursive;
+
+#header {
+    font-family: 'Gruppo', Arial, cursive;
     font-weight: 500;
     font-size: 28pt;
-    background-color: rgba(50,50,50,0.710);
+    background-color: rgba(50, 50, 50, 0.710);
 }
-#middleBlock{
+
+#middleBlock {
     min-height: 100px;
-    background-color: rgb(255,255,255);
-    border: 0.25pt solid rgb(120,120 ,120);
+    background-color: rgb(255, 255, 255);
+    border: 0.25pt solid rgb(120, 120, 120);
     border-collapse: collapse;
 }
-#page{
+
+#page {
     font-size: 10pt;
 }
-#sideBar{
-    border-left: 0.25pt solid rgb(120,120 ,120);
+
+.panel {
+    margin: 16px;
+    padding: 4px;
+}
+
+#sideBar {
+    border-left: 0.25pt solid rgb(120, 120, 120);
     border-collapse: collapse;
     /*background-color: rgb(220,220 ,220);
     border: 0.5pt solid rgb(120,120 ,120);
     border-collapse: collapse;*/
 }
-#footer{
-    border: 0.25pt solid rgb(120,120 ,120);
+
+#footer {
+    border: 0.25pt solid rgb(120, 120, 120);
     border-collapse: collapse;
-    font-size:70%;
+    font-size: 70%;
+}
+
+label,
+dt {
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 8pt;
+    font-weight: 400;
+    color: rgb(120, 120, 120);
+}
+
+.heading {
+    font-family: 'Raleway', Arial, cursive;
+    font-weight: 500;
+    font-size: 3ex;
+    border-bottom: dashed 0.5pt rgb(120, 120, 120);
+}
+
+input,
+textarea,
+select {
+    border: 0.5pt solid rgb(120, 120, 120);
+    border-radius: 3pt;
+    padding: 3pt;
 }
