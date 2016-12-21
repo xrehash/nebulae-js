@@ -9,12 +9,48 @@
           <dt>Name</dt>
           <dd><input name="resourceType.name" type="text" data-bind="value:name" /></dd>
           <dt>Parent</dt>
-          <dd><select name="resourceType.parent" data-bind="value:parent,optionsText:'name',optionsValue:'id',options:$parent.listResourceTypes"></select></dd>
+          <dd><select name="resourceType.parent" data-bind="value:parent,optionsText:'name',optionsCaption:'Choose Type...',valueAllowUnset:true,options:$parent.listResourceTypes"></select></dd>
           <dt>Schema</dt>
-          <dd><textarea name="resourceType.schema" data-bind="value:schema"></textarea></dd>
+          <dd>
+            <pre class="code" name="resourceType.schema" data-bind="text: schemaText"></pre>
+          </dd>
         </dl>
-        <button data-bind="click:saveForm"><em class="fa fa-save"></em> save</button>
+        <button class="btn btn-success" data-bind="click:saveForm"><em class="fa fa-save"></em> save</button>
       </form>
+    </div>
+    <div class="col-sm-5 panel panel-default">
+      <h2 class="heading">Schema Editor</h2>
+      <div class="schema-editor" data-bind="with:schemaEditorModel">
+        <fieldset>
+          <legend>Define Property</legend>
+          <div class="form-group">
+            <label for="propName">Property Name</label>
+            <input name="propName" class="form-control" data-bind="value:propName" />
+          </div>
+          <div class="form-group">
+            <label for="propType">Property Type</label>
+            <select name="propType" class="form-control" data-bind="value:propType,options:listPropTypes,valueAllowUnset:true"></select>
+          </div>
+          <button class="form-control" data-bind="click:applyEditor"><em class="fa fa-check"></em> apply</button>
+        </fieldset>
+        <table id="propertyTable" class="table table-bordered table-responsive">
+          <thead>
+            <tr>
+              <th class="table-title" colspan="2">Resource Type Schema</th>
+            </tr>
+            <tr>
+              <th class="heading">Property Name</th>
+              <th class="heading">Data Type</th>
+            </tr>
+          </thead>
+          <tbody data-bind="foreach: schema">
+            <tr>
+              <td data-bind="text: Object.getOwnPropertyNames($data)"></td>
+              <td data-bind="text: $data[Object.getOwnPropertyNames($data)]"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>

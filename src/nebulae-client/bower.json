@@ -19,5 +19,8 @@
     "system.js": "^0.19.41",
     "bootstrap": "^3.3.7",
     "font-awesome": "^4.7.0"
+  },
+  "resolutions": {
+    "jquery": "^3.1.1"
   }
 }

@@ -63,6 +63,7 @@ body {
 }
 
 label,
+legend,
 dt {
     font-family: Arial, Helvetica, sans-serif !important;
     font-size: 8pt;
@@ -70,7 +71,8 @@ dt {
     color: rgb(120, 120, 120);
 }
 
-.heading {
+.heading,
+.table-title {
     font-family: 'Raleway', Arial, cursive;
     font-weight: 500;
     font-size: 3ex;
@@ -78,9 +80,44 @@ dt {
 }
 
 input,
+button,
 textarea,
 select {
     border: 0.5pt solid rgb(120, 120, 120);
+    font-family: Arial, Helvetica, sans-serif !important;
     border-radius: 3pt;
     padding: 3pt;
+}
+
+#page button.btn {
+    font-size: 200% !important;
+}
+
+div.schema-editor legend {
+    padding: 4pt;
+    color: rgb(0, 0, 0);
+    background-color: rgba(220, 220, 220, 0.41);
+    border-top-left-radius: 6pt;
+    border-top-right-radius: 6pt;
+}
+
+div.schema-editor button {
+    font-size: 8pt;
+    color: rgb(22, 200, 240);
+}
+
+th.heading {
+    font-size: 9pt;
+    padding: 0;
+}
+
+#propertyTable {
+    color: rgb(0, 0, 0);
+    font-size: 9pt;
+    margin-top: 15pt;
+    background-color: rgba(250, 200, 0, 0.3);
+}
+
+#propertyTable td {
+    font-family: consolas, 'Courier Prime', 'Courier New', Courier, monospace;
 }
