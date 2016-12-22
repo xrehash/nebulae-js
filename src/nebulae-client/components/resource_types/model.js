@@ -10,7 +10,16 @@ var SchemaEditor = (function () {
 
     self.applyEditor = function () {
       var text = "{\"" + self.propName() + "\":\"" + self.propType() + "\"}";
-      self.schema.push(JSON.parse(text));
+      var elm = JSON.parse(text);
+      var args = [elm];
+
+      function removeMe() {
+        console.log('clicked removeMe');
+        $.gevent.publish('spa-model-schemaChange', ['remove', args]);
+      };
+      elm.removeMe = removeMe;
+      $.gevent.publish('spa-model-schemaChange', ['add', args]);
+      //self.schema.push(JSON.parse(text));
     };
   };
   return SchemaEditor;
@@ -27,12 +36,42 @@ var ResourceTypeModel = (function () {
     self.name = ko.observable("");
     self.parent = ko.observable('');
     self.parentId = ko.computed(function () {
-      return self.parent().id
+      return self.parent() ? self.parent().id : undefined;
     });
     self.schema = ko.observableArray([]);
     self.schemaText = ko.computed(function () {
       return JSON.stringify(self.schema());
     });
+    self.schemaChangeHandler = function (evt, changeType, changes) {
+      console.log("Handling schema change", changeType, changes);
+      switch (changeType) {
+        case 'add':
+          changes.forEach((z) => {
+            self.schema.push(z);
+          });
+          break;
+        case 'remove':
+          console.log("remove", changes);
+          changes.forEach((z) => {
+            self.schema.remove(z);
+          });
+          break;
+      }
+    };
+    self.parent.subscribe(function (nValue) {
+      if (nValue && Array.isArray(nValue.schema)) {
+        console.log("New parent selected adding schema", nValue.schema);
+        nValue.schema.forEach((z) => {
+          z.removeMe = function removeMe() {
+            console.log('clicked removeMe');
+            $.gevent.publish('spa-model-schemaChange', ['remove', [z]]);
+          };
+        });
+
+        self.schemaChangeHandler(null, 'add', nValue.schema);
+      }
+    });
+    $.gevent.subscribe($(document), 'spa-model-schemaChange', self.schemaChangeHandler);
   };
   return ResourceTypeModel;
 })();

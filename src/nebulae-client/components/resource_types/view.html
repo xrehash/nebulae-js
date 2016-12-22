@@ -36,17 +36,19 @@
         <table id="propertyTable" class="table table-bordered table-responsive">
           <thead>
             <tr>
-              <th class="table-title" colspan="2">Resource Type Schema</th>
+              <th class="table-title" colspan="3">Resource Type Schema</th>
             </tr>
             <tr>
               <th class="heading">Property Name</th>
-              <th class="heading">Data Type</th>
+              <th class="heading" colspan="1">Data Type</th>
+              <th>&nbsp;</th>
             </tr>
           </thead>
           <tbody data-bind="foreach: schema">
             <tr>
-              <td data-bind="text: Object.getOwnPropertyNames($data)"></td>
-              <td data-bind="text: $data[Object.getOwnPropertyNames($data)]"></td>
+              <td data-bind="text: Object.getOwnPropertyNames($data)[0]"></td>
+              <td data-bind="text: $data[Object.getOwnPropertyNames($data)[0]]"></td>
+              <td><span class="btn btn-xs btn-danger" data-bind="click:()=>{$data.removeMe();}"><em class="fa fa-trash"></em> remove</span></td>
             </tr>
           </tbody>
         </table>
