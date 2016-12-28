@@ -8,6 +8,7 @@ var SchemaEditor = (function () {
     self.propType = ko.observable();
     self.listPropTypes = ko.observableArray(['string', 'number', 'date']);
 
+
     self.applyEditor = function () {
       var text = "{\"" + self.propName() + "\":\"" + self.propType() + "\"}";
       var elm = JSON.parse(text);
@@ -84,6 +85,13 @@ var Model = (function () {
     self.App.PageTitle(self.greeting);
     self.listResourceTypes = ko.observableArray();
     self.newResourceType = ko.observable();
+    self.isSchemaEditorVisible = ko.observable(false);
+    self.schemaEditorButtonContents = ko.computed(function () {
+      return self.isSchemaEditorVisible() ? 'done' : 'edit';
+    });
+    self.toggleSchemaEditor = function () {
+      self.isSchemaEditorVisible(!self.isSchemaEditorVisible());
+    };
 
     self.initFormModel = function () {
       self.newResourceType(new ResourceTypeModel());

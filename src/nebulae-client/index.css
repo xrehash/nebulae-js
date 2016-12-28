@@ -121,3 +121,11 @@ th.heading {
 #propertyTable td {
     font-family: consolas, 'Courier Prime', 'Courier New', Courier, monospace;
 }
+
+.displayed {
+    display: initial;
+}
+
+.hidden {
+    display: none;
+}
