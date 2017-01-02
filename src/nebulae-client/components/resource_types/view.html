@@ -1,6 +1,28 @@
 <div class="component container-fluid">
   <div class="row">
-    <div class="col-sm-5 panel panel panel-info">
+    <div class="col-sm-5 panel panel panel-info" data-bind="with:searchModel">
+      <h2 class="heading">Resource Types</h2>
+      <div class="well">
+        <button class="btn-xs btn-sexy" data-bind="click:$parent.toggleEditor"><em class="fa" data-bind="css:{'fa-plus':! $parent.isEditorVisible(), 'fa-check':$parent.isEditorVisible}, text:$parent.editorButtonContents"></em></button>
+      </div>
+      <div class="well well-sm">
+        <label for="searchResourceType">Search</label> <input type="text" id="searchResourceType" data-bind="value:searchTerm, event:{keypress:searchBoxKeyPress}"
+        /> &nbsp;<button class="btn-xs btn-default" data-bind="click:doSearch"><em class="fa fa-search"></em> search</button>
+      </div>
+      <div>
+        <h3 class="heading">Search Results</h3>
+        <table class="table-responsive table-hover table-striped searchResult">
+          <thead></thead>
+          <tbody data-bind="foreach:resultList">
+            <tr>
+              <td data-bind="text:name"></td>
+            </tr>
+          </tbody>
+          <tfoot></tfoot>
+        </table>
+      </div>
+    </div>
+    <div class="col-sm-5 panel panel panel-info" data-bind="visible:isEditorVisible">
       <h2 class="heading">Create Resource Type</h2>
       <form action="POST" target="">
         <dl class="form" data-bind="with:newResourceType">
@@ -11,7 +33,7 @@
           <dt>Parent</dt>
           <dd><select name="resourceType.parent" data-bind="value:parent,optionsText:'name',optionsCaption:'Choose Type...',valueAllowUnset:true,options:$parent.listResourceTypes"></select></dd>
           <dt>Schema
-            <button class="btn btn-xs btn-primary" data-bind="click:$parent.toggleSchemaEditor">
+            <button class="btn-xs btn-primary" data-bind="click:$parent.toggleSchemaEditor">
               <em class="fa" data-bind="css:{'fa-edit':! $parent.isSchemaEditorVisible(), 'fa-check':$parent.isSchemaEditorVisible}, text:$parent.schemaEditorButtonContents"></em>
             </button></dt>
           <dd>
@@ -55,7 +77,7 @@
             <pre class="code" name="resourceType.schema" data-bind="text: schemaText"></pre>
           </dd>
         </dl>
-        <button class="btn btn-success" data-bind="click:saveForm"><em class="fa fa-save"></em> save</button>
+        <button class="btn-xs btn-success" data-bind="click:saveForm"><em class="fa fa-save"></em> save</button>
       </form>
     </div>
   </div>

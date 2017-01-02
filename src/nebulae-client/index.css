@@ -118,7 +118,8 @@ th.heading {
     background-color: rgba(250, 200, 0, 0.3);
 }
 
-#propertyTable td {
+#propertyTable td,
+.pickList td {
     font-family: consolas, 'Courier Prime', 'Courier New', Courier, monospace;
 }
 
@@ -128,4 +129,17 @@ th.heading {
 
 .hidden {
     display: none;
+}
+
+.searchResult {
+    font-family: 'Raleway', Arial, cursive;
+    font-weight: 500;
+    font-size: 10pt;
+    cursor: pointer;
+    width: 100%;
+}
+
+.btn-sexy {
+    text-align: center;
+    cursor: pointer;
 }

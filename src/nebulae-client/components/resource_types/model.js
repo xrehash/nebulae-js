@@ -26,6 +26,37 @@ var SchemaEditor = (function () {
   return SchemaEditor;
 })();
 
+var SearchModel = (function () {
+  function SearchModel(rTModel) {
+    var self = this;
+    self.rTModel = rTModel;
+    self.searchTerm = ko.observable("");
+    self.searchBoxKeyPress = function (obj, evt) {
+      console.log(evt.originalEvent);
+      if (evt.originalEvent.keyCode == 13) {
+        setTimeout(self.doSearch, 100);
+      }
+      return true;
+    };
+    self.doSearch = function () {
+      if (self.searchTerm()) {
+        var target = new RegExp(self.searchTerm(), "i");
+        var results = [];
+        self.rTModel.listResourceTypes().map(function (rt, idx, arr) {
+          if (target.test(rt.name)) {
+            results.push(rt);
+          }
+        });
+        self.resultList(results);
+      };
+    };
+    self.resultList = ko.observableArray();
+
+  }
+  return SearchModel;
+
+})();
+
 var ResourceTypeModel = (function () {
   function ResourceTypeModel() {
     var self = this;
@@ -92,6 +123,13 @@ var Model = (function () {
     self.toggleSchemaEditor = function () {
       self.isSchemaEditorVisible(!self.isSchemaEditorVisible());
     };
+    self.isEditorVisible = ko.observable(false);
+    self.editorButtonContents = ko.computed(function () {
+      return self.isEditorVisible() ? ' hide editor' : ' show editor';
+    });
+    self.toggleEditor = function () {
+      self.isEditorVisible(!self.isEditorVisible());
+    };
 
     self.initFormModel = function () {
       self.newResourceType(new ResourceTypeModel());
@@ -127,7 +165,7 @@ var Model = (function () {
       networkCall.GetResourceTypes().then(
         function (response) {
           var rr = JSON.parse(response);
-          console.log(response);
+          //console.log(response);
           var listData = rr.rows.map((v, i, s) => {
             return {
               id: v.id,
@@ -136,7 +174,7 @@ var Model = (function () {
               schema: v.value[2]
             }
           });
-          console.log(listData);
+          //console.log(listData);
           self.listResourceTypes(listData);
         },
         function (error) {
@@ -145,6 +183,8 @@ var Model = (function () {
       );
     };
     self.loadParentList();
+
+    self.searchModel = ko.observable(new SearchModel(self));
   }
   return ViewModel;
 })();
