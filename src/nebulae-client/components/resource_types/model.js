@@ -32,7 +32,7 @@ var SearchModel = (function () {
     self.rTModel = rTModel;
     self.searchTerm = ko.observable("");
     self.searchBoxKeyPress = function (obj, evt) {
-      console.log(evt.originalEvent);
+      //console.log(evt.originalEvent);
       if (evt.originalEvent.keyCode == 13) {
         setTimeout(self.doSearch, 100);
       }
@@ -49,6 +49,10 @@ var SearchModel = (function () {
         });
         self.resultList(results);
       };
+    };
+    self.rowSelected = function (argObj, arg) {
+      console.log(argObj, arg);
+      $.gevent.publish('spa-model-search-change', [argObj]);
     };
     self.resultList = ko.observableArray();
 
@@ -130,6 +134,16 @@ var Model = (function () {
     self.toggleEditor = function () {
       self.isEditorVisible(!self.isEditorVisible());
     };
+    self.pickedResourceType = ko.observable();
+    self.isViewerVisible = ko.observable(true);
+    self.viewResourceType = function (arg) {
+      console.log(arg);
+    };
+    self.searchChangeHandler = function (evt, arg) {
+      self.isViewerVisible(true);
+      self.pickedResourceType(arg);
+    };
+
 
     self.initFormModel = function () {
       self.newResourceType(new ResourceTypeModel());
@@ -138,6 +152,7 @@ var Model = (function () {
       } else {
         self.schemaEditorModel = ko.observable(new SchemaEditor(self.newResourceType().schema));
       }
+      $.gevent.subscribe($(document), 'spa-model-search-change', self.searchChangeHandler);
 
     };
     self.initFormModel();

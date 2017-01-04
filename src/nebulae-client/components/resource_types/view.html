@@ -1,84 +1,121 @@
 <div class="component container-fluid">
   <div class="row">
-    <div class="col-sm-5 panel panel panel-info" data-bind="with:searchModel">
+    <div class="col-sm-5 panel panel-info" data-bind="with:searchModel">
       <h2 class="heading">Resource Types</h2>
       <div class="well">
-        <button class="btn-xs btn-sexy" data-bind="click:$parent.toggleEditor"><em class="fa" data-bind="css:{'fa-plus':! $parent.isEditorVisible(), 'fa-check':$parent.isEditorVisible}, text:$parent.editorButtonContents"></em></button>
+        <button class="btn-xs btn-sexy" data-bind="click:$parent.toggleEditor">
+          <em class="fa" data-bind="css:{'fa-plus':! $parent.isEditorVisible(), 'fa-check':$parent.isEditorVisible}, text:$parent.editorButtonContents"></em>
+        </button>
       </div>
       <div class="well well-sm">
-        <label for="searchResourceType">Search</label> <input type="text" id="searchResourceType" data-bind="value:searchTerm, event:{keypress:searchBoxKeyPress}"
-        /> &nbsp;<button class="btn-xs btn-default" data-bind="click:doSearch"><em class="fa fa-search"></em> search</button>
+        <input type="text" id="searchResourceType" data-bind="value:searchTerm, event:{keypress:searchBoxKeyPress}" /> &nbsp;
+        <button class="btn-xs btn-default" data-bind="click:doSearch"><em class="fa fa-search"></em> search</button>
       </div>
       <div>
         <h3 class="heading">Search Results</h3>
         <table class="table-responsive table-hover table-striped searchResult">
           <thead></thead>
           <tbody data-bind="foreach:resultList">
-            <tr>
-              <td data-bind="text:name"></td>
+            <tr data-bind="css:{'selectedRow': ($root.pickedResourceType() && $root.pickedResourceType().id) == $data.id}">
+              <td data-bind="text:name,click:$parent.rowSelected"></td>
             </tr>
           </tbody>
           <tfoot></tfoot>
         </table>
       </div>
     </div>
-    <div class="col-sm-5 panel panel panel-info" data-bind="visible:isEditorVisible">
-      <h2 class="heading">Create Resource Type</h2>
-      <form action="POST" target="">
-        <dl class="form" data-bind="with:newResourceType">
-          <dt>_id</dt>
-          <dd><em name="resourceType._id" data-bind="text:_id"></em></dd>
-          <dt>Name</dt>
-          <dd><input name="resourceType.name" type="text" data-bind="value:name" /></dd>
-          <dt>Parent</dt>
-          <dd><select name="resourceType.parent" data-bind="value:parent,optionsText:'name',optionsCaption:'Choose Type...',valueAllowUnset:true,options:$parent.listResourceTypes"></select></dd>
-          <dt>Schema
-            <button class="btn-xs btn-primary" data-bind="click:$parent.toggleSchemaEditor">
+    <div class="col-sm-5 panel panel-info" data-bind="visible:isEditorVisible">
+      <div data-bind="with:newResourceType">
+        <h2 class="heading">Create Resource Type</h2>
+        <form action="POST" target="">
+          <dl class="form">
+            <dt>_id</dt>
+            <dd><em name="resourceType._id" data-bind="text:_id"></em></dd>
+            <dt>Name</dt>
+            <dd><input name="resourceType.name" type="text" data-bind="value:name" /></dd>
+            <dt>Parent</dt>
+            <dd><select name="resourceType.parent" data-bind="value:parent,optionsText:'name',optionsCaption:'Choose Type...',valueAllowUnset:true,options:$parent.listResourceTypes"></select></dd>
+            <dt>Schema
+              <button class="btn-xs btn-primary" data-bind="click:$parent.toggleSchemaEditor">
               <em class="fa" data-bind="css:{'fa-edit':! $parent.isSchemaEditorVisible(), 'fa-check':$parent.isSchemaEditorVisible}, text:$parent.schemaEditorButtonContents"></em>
             </button></dt>
-          <dd>
-            <div class="panel panel-default" data-bind="with:$parent.schemaEditorModel, visible: $parent.isSchemaEditorVisible">
-              <h2 class="heading">Schema Editor</h2>
-              <div class="schema-editor">
-                <fieldset>
-                  <legend>Define Property</legend>
-                  <div class="form-group">
-                    <label for="propName">Property Name</label>
-                    <input name="propName" class="form-control" data-bind="value:propName" />
-                  </div>
-                  <div class="form-group">
-                    <label for="propType">Property Type</label>
-                    <select name="propType" class="form-control" data-bind="value:propType,options:listPropTypes,valueAllowUnset:true"></select>
-                  </div>
-                  <button class="form-control" data-bind="click:applyEditor"><em class="fa fa-thumbs-o-up"></em> apply</button>
-                </fieldset>
-                <div class="text-center"><em class="fa fa-angle-double-down"></em></div>
-                <table id="propertyTable" class="table table-bordered table-responsive">
-                  <thead>
-                    <tr>
-                      <th class="table-title" colspan="3">Resource Type Schema</th>
-                    </tr>
-                    <tr>
-                      <th class="heading">Property Name</th>
-                      <th class="heading" colspan="1">Data Type</th>
-                      <th>&nbsp;</th>
-                    </tr>
-                  </thead>
-                  <tbody data-bind="foreach: schema">
-                    <tr>
-                      <td data-bind="text: Object.getOwnPropertyNames($data)[0]"></td>
-                      <td data-bind="text: $data[Object.getOwnPropertyNames($data)[0]]"></td>
-                      <td><span class="btn btn-xs btn-danger" data-bind="click:()=>{$data.removeMe();}"><em class="fa fa-trash"></em> remove</span></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+            <dd>
+              <!-- <pre class="code" name="resourceType.schema" data-bind="text: schemaText"></pre> -->
+              <table id="propertyTable" class="table table-bordered table-responsive">
+                <thead>
+                  <tr>
+                    <th class="heading">Property Name</th>
+                    <th class="heading" colspan="1">Data Type</th>
+                  </tr>
+                </thead>
+                <tbody data-bind="foreach: schema">
+                  <tr>
+                    <td data-bind="text: Object.getOwnPropertyNames($data)[0]"></td>
+                    <td data-bind="text: $data[Object.getOwnPropertyNames($data)[0]]"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </dd>
+          </dl>
+          <button class="btn-xs btn-success" data-bind="click:$parent.saveForm"><em class="fa fa-save"></em> save</button>
+        </form>
+      </div>
+      <div class="panel panel-default" data-bind="with:schemaEditorModel, visible: isSchemaEditorVisible">
+        <h2 class="heading">Schema Editor</h2>
+        <div class="schema-editor">
+          <fieldset>
+            <legend>Define Property</legend>
+            <div class="form-group">
+              <label for="propName">Property Name</label>
+              <input name="propName" class="form-control" data-bind="value:propName" />
             </div>
-            <pre class="code" name="resourceType.schema" data-bind="text: schemaText"></pre>
-          </dd>
-        </dl>
-        <button class="btn-xs btn-success" data-bind="click:saveForm"><em class="fa fa-save"></em> save</button>
-      </form>
+            <div class="form-group">
+              <label for="propType">Property Type</label>
+              <select name="propType" class="form-control" data-bind="value:propType,options:listPropTypes,valueAllowUnset:true"></select>
+            </div>
+            <button class="form-control" data-bind="click:applyEditor"><em class="fa fa-thumbs-o-up"></em> apply</button>
+          </fieldset>
+          <div class="text-center"><em class="fa fa-angle-double-down"></em></div>
+          <table id="propertyTable" class="table table-bordered table-responsive">
+            <thead>
+              <tr>
+                <th class="table-title" colspan="3">Resource Type Schema</th>
+              </tr>
+              <tr>
+                <th class="heading">Property Name</th>
+                <th class="heading" colspan="1">Data Type</th>
+                <th>&nbsp;</th>
+              </tr>
+            </thead>
+            <tbody data-bind="foreach: schema">
+              <tr>
+                <td data-bind="text: Object.getOwnPropertyNames($data)[0]"></td>
+                <td data-bind="text: $data[Object.getOwnPropertyNames($data)[0]]"></td>
+                <td><span class="btn btn-xs btn-danger" data-bind="click:()=>{$data.removeMe();}"><em class="fa fa-trash"></em> remove</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-5 panel panel-info" data-bind="visible:isViewerVisible">
+      <div data-bind="with:pickedResourceType">
+        <h2>Resource Type <span data-bind=""></span></h2>
+        <table id="propertyTable" class="table table-bordered table-responsive">
+          <thead>
+            <tr>
+              <th class="heading">Property Name</th>
+              <th class="heading" colspan="1">Data Type</th>
+            </tr>
+          </thead>
+          <tbody data-bind="foreach: schema">
+            <tr>
+              <td data-bind="text: Object.getOwnPropertyNames($data)[0]"></td>
+              <td data-bind="text: $data[Object.getOwnPropertyNames($data)[0]]"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>
