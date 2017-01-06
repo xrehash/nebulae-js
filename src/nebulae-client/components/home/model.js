@@ -10,4 +10,7 @@ var Model = function (App) {
     self.go = function () {
         Router.navigate("resource_types");
     };
+    self.go2 = function () {
+        Router.navigate("resource");
+    };
 };

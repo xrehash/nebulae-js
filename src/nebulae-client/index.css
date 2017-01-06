@@ -93,6 +93,10 @@ select {
     font-size: 200% !important;
 }
 
+#page button.btn-xs {
+    font-size: 60% !important;
+}
+
 div.schema-editor legend {
     padding: 4pt;
     color: rgb(0, 0, 0);

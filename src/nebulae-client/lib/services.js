@@ -63,9 +63,29 @@ var networkCall;
   }
 
   var GetResourceTypes = (function () {
-    function GetResourceTypes() {
+    function GetResourceTypes(ok, problem) {
       var queryURL = "https://couchdb-076880.smileupps.com/nebulae_resource_types/_design/resource_type_names/_view/names";
-      return get(queryURL);
+      var p = get(queryURL);
+      p.then(
+        function (response) {
+          var rr = JSON.parse(response);
+          //console.log(response);
+          var listData = rr.rows.map((v, i, s) => {
+            return {
+              id: v.id,
+              name: v.value[0],
+              parentId: v.value[1],
+              schema: v.value[2]
+            }
+          });
+          //console.log(listData);
+          ok(listData);
+        },
+        function (error) {
+          problem(error);
+        }
+      );
+      return p;
     }
     return GetResourceTypes;
   }());

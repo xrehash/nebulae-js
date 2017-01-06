@@ -100,7 +100,11 @@
     </div>
     <div class="col-sm-5 panel panel-info" data-bind="visible:isViewerVisible">
       <div data-bind="with:pickedResourceType">
-        <h2>Resource Type <span data-bind=""></span></h2>
+        <h2 class="heading" data-bind="text:name"></h2>
+        <h5 class="h5">Resource Type <span data-bind="text:id"></span></h5>
+        <div>
+          <button class="btn btn-xs"><em class="fa fa-search"></em> Find Cases</button> <button class="btn btn-xs"><em class="fa fa-plus-square"></em> New Resource</button>
+        </div>
         <table id="propertyTable" class="table table-bordered table-responsive">
           <thead>
             <tr>

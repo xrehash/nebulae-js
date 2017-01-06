@@ -177,19 +177,7 @@ var Model = (function () {
         });
     };
     self.loadParentList = function () {
-      networkCall.GetResourceTypes().then(
-        function (response) {
-          var rr = JSON.parse(response);
-          //console.log(response);
-          var listData = rr.rows.map((v, i, s) => {
-            return {
-              id: v.id,
-              name: v.value[0],
-              parentId: v.value[1],
-              schema: v.value[2]
-            }
-          });
-          //console.log(listData);
+      networkCall.GetResourceTypes(function (listData) {
           self.listResourceTypes(listData);
         },
         function (error) {
