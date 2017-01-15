@@ -14,10 +14,17 @@ var nebulae;
     nebulae.ResourceType = ResourceType;
 
     var Resource = (function () {
-        function Resource(name, parent, resourceType) {
+        function Resource(id, name, resourceType) {
+            this._id = id;
             this.name = name;
-            this.parent = parent;
             this.resourceType = resourceType;
+            var data = {};
+            this.propertySet = data;
+            if (resourceType.schema && resourceType.schema.length) {
+                resourceType.schema.map(function (v, i, Arr) {
+                    data[Object.getOwnPropertyNames(v)[0]] = null;
+                });
+            }
         }
         return Resource;
     }());
@@ -42,5 +49,11 @@ var nebulae;
         return Relationship;
     }());
     nebulae.Relationship = Relationship;
+
+    nebulae.newId = function () {
+        var dt = new Date();
+        var num = Math.floor(Math.random() * 100 * Date.now());
+        return "" + dt.getFullYear() + dt.getMonth() + dt.getDay() + dt.getHours() + dt.getMinutes() + "_" + num;
+    };
 
 })(nebulae || (nebulae = {}));

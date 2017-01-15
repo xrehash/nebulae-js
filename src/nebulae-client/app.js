@@ -25,8 +25,10 @@ var zApp = function () {
 
     self.present = function (comp) {
         var view = 'components/' + comp + '/view.html';
+        var style = 'components/' + comp + '/style.css';
         var model = 'components/' + comp + '/model.js';
         var viewText = '';
+        var composeOk = false;
         var req = $.get(view);
         req.done(function (data) {
             //console.log(ko);            
@@ -35,7 +37,10 @@ var zApp = function () {
                 $("#page").empty();
                 $("#page").append(viewText);
                 $("#page").append("<script>(function(){" + scriptText + "if(Model){var model = new Model(App);var comp = document.getElementById('page').getElementsByClassName('component').item(0);ko.applyBindings(model,comp);}})();</script>");
-
+                var styleReq = $.get(style);
+                styleReq.done(function (styleCopy) {
+                    $("#page").append("<style scoped>" + styleCopy + "</style>");
+                });
             });
         });
 

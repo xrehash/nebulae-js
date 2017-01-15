@@ -1,0 +1,16 @@
+label {
+  display: block;
+}
+
+input[type=text] {
+  border: none;
+  border-radius: 0 !important;
+  border-bottom: 1pt solid black;
+  margin-bottom: 6pt;
+  line-height: 180%;
+  width: 100%;
+}
+
+input[type=text]:focus {
+  background-color: rgba(0, 30, 255, 0.1)
+}

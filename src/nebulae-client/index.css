@@ -1,10 +1,11 @@
 body {
     font-size: 14pt;
     font-family: 'Halant', serif;
+    background-color: rgba(145, 120, 122, 0.9);
 }
 
 #screen {
-    background-color: rgba(220, 230, 240, 0.3);
+    /*background-color: rgba(220, 230, 240, 0.3);*/
     padding: 16px;
 }
 
@@ -34,7 +35,7 @@ body {
 
 #middleBlock {
     min-height: 100px;
-    background-color: rgb(255, 255, 255);
+    /*background-color: rgb(255, 255, 255);*/
     border: 0.25pt solid rgb(120, 120, 120);
     border-collapse: collapse;
 }

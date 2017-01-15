@@ -4,7 +4,25 @@
       <h2 class="heading">Resources</h2>
       <div class="">
         <select name="resourceType" data-bind="value:resourceType,optionsText:'name',optionsCaption:'Choose Type...',valueAllowUnset:true,options:listResourceTypes"></select>
-        <button class="btn-xs"><em class="fa fa-pencil-square-o"></em> create</button>
+        <button class="btn-xs" data-bind="click:createResourceClick"><em class="fa fa-pencil-square-o"></em> create</button>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div data-bind="with:resourceEditor">
+      <div class="panel col-sm-6 form" data-bind="visible:isVisible">
+        <div class="text-right"><span data-bind="click:cancelClick" class="btn btn-xs btn-danger"><em class="fa fa-ban"></em> cancel</span></div>
+        <h4 class="h4" data-bind="text:resourceType().name"></h4>
+        <label>Name</label>
+        <input class="" type="text" data-bind="value:resource().name" />
+        <ol data-bind="foreach:resourceType().schema">
+          <li>
+            <label data-bind="text: Object.getOwnPropertyNames($data)[0], attr:{for:$parent.propId(Object.getOwnPropertyNames($data)[0])}"></label>
+            <input data-bind="attr:{id:$parent.propId(Object.getOwnPropertyNames($data)[0]), type:$parent.propType(Object.getOwnPropertyNames($data)[0])}"
+            />
+            <!-- <input data-bind="text: $data[Object.getOwnPropertyNames($data)[0]]"></li> -->
+          </li>
+        </ol>
       </div>
     </div>
   </div>
