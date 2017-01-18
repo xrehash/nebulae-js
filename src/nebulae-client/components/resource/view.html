@@ -11,14 +11,18 @@
   <div class="row">
     <div data-bind="with:resourceEditor">
       <div class="panel col-sm-6 form" data-bind="visible:isVisible">
-        <div class="text-right"><span data-bind="click:cancelClick" class="btn btn-xs btn-danger"><em class="fa fa-ban"></em> cancel</span></div>
+        <div class="text-right">
+          <span data-bind="click:cancelClick" class="btn btn-xs btn-danger"><em class="fa fa-ban"></em> cancel</span>
+          <span data-bind="click:saveClick" class="btn btn-xs btn-success"><em class="fa fa-check"></em> save</span>
+        </div>
         <h4 class="h4" data-bind="text:resourceType().name"></h4>
+        <p class="" data-bind="text:resource()._id"></p>
         <label>Name</label>
         <input class="" type="text" data-bind="value:resource().name" />
         <ol data-bind="foreach:resourceType().schema">
           <li>
             <label data-bind="text: Object.getOwnPropertyNames($data)[0], attr:{for:$parent.propId(Object.getOwnPropertyNames($data)[0])}"></label>
-            <input data-bind="attr:{id:$parent.propId(Object.getOwnPropertyNames($data)[0]), type:$parent.propType(Object.getOwnPropertyNames($data)[0])}"
+            <input data-bind="value:($parent.resource()[Object.getOwnPropertyNames($data)[0]]), attr:{id:$parent.propId(Object.getOwnPropertyNames($data)[0]), type:$parent.propType(Object.getOwnPropertyNames($data)[0])}"
             />
             <!-- <input data-bind="text: $data[Object.getOwnPropertyNames($data)[0]]"></li> -->
           </li>

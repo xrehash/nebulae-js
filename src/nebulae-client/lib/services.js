@@ -91,6 +91,15 @@ var networkCall;
   }());
   networkCall.GetResourceTypes = GetResourceTypes;
 
+  var SaveResource = (function () {
+    function SaveResource(resource) {
+      var docURL = "https://couchdb-076880.smileupps.com/nebulae_resources";
+      return post(docURL, JSON.stringify(resource));
+    }
+    return SaveResource;
+  })();
+  networkCall.SaveResource = SaveResource;
+
   var SaveResourceType = (function () {
     function SaveResourceType(data) {
       var docURL = "https://couchdb-076880.smileupps.com/nebulae_resource_types";

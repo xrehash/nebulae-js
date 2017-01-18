@@ -15,14 +15,14 @@ var nebulae;
 
     var Resource = (function () {
         function Resource(id, name, resourceType) {
+            var self = this;
             this._id = id;
-            this.name = name;
+            this.name = ko.observable(name);
             this.resourceType = resourceType;
-            var data = {};
-            this.propertySet = data;
+
             if (resourceType.schema && resourceType.schema.length) {
                 resourceType.schema.map(function (v, i, Arr) {
-                    data[Object.getOwnPropertyNames(v)[0]] = null;
+                    self[Object.getOwnPropertyNames(v)[0]] = ko.observable();
                 });
             }
         }
