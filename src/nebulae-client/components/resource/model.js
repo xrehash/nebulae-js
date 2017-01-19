@@ -14,6 +14,11 @@ var Model = (function () {
     App.PageTitle("Resources");
     self.App = App;
     self.listResourceTypes = new ko.observableArray();
+    self.searchResults = new ko.observableArray();
+    self.showResults = new ko.computed(function () {
+      return self.searchResults().length ? true : false;
+    });
+    self.searchTarget = ko.observable();
     self.resourceType = new ko.observable();
     self.resourceEditor = new ko.observable();
 
@@ -29,13 +34,32 @@ var Model = (function () {
       );
     };
 
+    self.searchResourcesByType = function () {
+      var target = self.resourceType();
+      networkCall.GetResourcesByType(self.resourceType().id,
+        function (results) {
+          console.log(results);
+          self.searchTarget(target.name);
+          self.searchResults(results);
+        },
+        function (err) {
+          console.log(err);
+          alert(err);
+        });
+    };
+
     self.createResourceClick = function () {
       if (self.resourceType()) {
         self.displayNewResourceForm(self.resourceType());
       }
     };
+    self.searchByResourceTypeClick = function () {
+      if (self.resourceType()) {
+        self.searchResourcesByType();
+      }
+    };
+
     self.displayNewResourceForm = function (resType) {
-      console.log("make new", resType);
       if (!self.resourceEditor()) {
         var re = new ResourceEditor(self);
 
@@ -43,7 +67,6 @@ var Model = (function () {
         re.isVisible(true);
         re.resource(new nebulae.Resource(nebulae.newId(), null, resType))
         self.resourceEditor(re);
-        console.log(re.resource());
       }
     };
     self.cancelEditHandler = function (evt, changeType, changes) {

@@ -1,16 +1,17 @@
 <div class="component container-fluid">
   <div class="row">
-    <div class="col-sm-5 panel panel-info" data-bind="">
+    <div class="col-sm-12 panel panel-info" data-bind="">
       <h2 class="heading">Resources</h2>
-      <div class="">
-        <select name="resourceType" data-bind="value:resourceType,optionsText:'name',optionsCaption:'Choose Type...',valueAllowUnset:true,options:listResourceTypes"></select>
-        <button class="btn-xs" data-bind="click:createResourceClick"><em class="fa fa-pencil-square-o"></em> create</button>
+      <div class="act">
+        <select class="bigItem" name="resourceType" data-bind="value:resourceType,optionsText:'name',optionsCaption:'Choose Type...',valueAllowUnset:true,options:listResourceTypes"></select>
+        <span class="btn" data-bind="click:createResourceClick"><em class="fa fa-pencil-square-o"></em> create</span>
+        <span class="btn" data-bind="click:searchByResourceTypeClick"><em class="fa fa-search"></em> search</span>
       </div>
     </div>
   </div>
   <div class="row">
     <div data-bind="with:resourceEditor">
-      <div class="panel col-sm-6 form" data-bind="visible:isVisible">
+      <div class="panel col-sm-6 form comp" data-bind="visible:isVisible">
         <div class="text-right">
           <span data-bind="click:cancelClick" class="btn btn-xs btn-danger"><em class="fa fa-ban"></em> cancel</span>
           <span data-bind="click:saveClick" class="btn btn-xs btn-success"><em class="fa fa-check"></em> save</span>
@@ -28,6 +29,22 @@
           </li>
         </ol>
       </div>
+    </div>
+    <div class="searchResultsPanel panel col-sm-6 comp" data-bind="visible:showResults">
+      <h2 class="heading">Search Results for <span data-bind="text:searchTarget"></span></h2>
+      <table class="table table-bordered table-condensed table-responsive table-hover results">
+        <thead>
+          <tr>
+            <th>Name</th>
+          </tr>
+        </thead>
+        <tbody data-bind="foreach:searchResults">
+          <tr>
+            <td data-bind="text:name"></td>
+          </tr>
+        </tbody>
+        <tfoot></tfoot>
+      </table>
     </div>
   </div>
 </div>

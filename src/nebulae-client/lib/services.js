@@ -1,4 +1,7 @@
 var networkCall;
+var config = {
+  dbURL: 'https://couchdb-076880.smileupps.com/'
+};
 
 (function (networkCall) {
   var get = function get(url) {
@@ -64,7 +67,7 @@ var networkCall;
 
   var GetResourceTypes = (function () {
     function GetResourceTypes(ok, problem) {
-      var queryURL = "https://couchdb-076880.smileupps.com/nebulae_resource_types/_design/resource_type_names/_view/names";
+      var queryURL = config.dbURL + "nebulae_resource_types/_design/resource_type_names/_view/names";
       var p = get(queryURL);
       p.then(
         function (response) {
@@ -91,9 +94,37 @@ var networkCall;
   }());
   networkCall.GetResourceTypes = GetResourceTypes;
 
+  //https://couchdb-076880.smileupps.com/nebulae_resources/_design/resources_views/_view/resourcesByType?key=%2220161131616_98826662250411%22&include_docs=true
+  var GetResourcesByType = (function () {
+    function GetResourcesByType(resourceTypeId, ok, problem) {
+      var queryURL = config.dbURL + 'nebulae_resources/_design/resources_views/_view/resourcesByType?key="' + resourceTypeId + '"';
+      var p = get(queryURL);
+      p.then(
+        function (response) {
+          var rr = JSON.parse(response);
+          //console.log(response);
+          var listData = rr.rows.map((v, i, s) => {
+            return {
+              id: v.id,
+              name: v.value
+            }
+          });
+          //console.log(listData);
+          ok(listData);
+        },
+        function (error) {
+          problem(error);
+        }
+      );
+      return p;
+    }
+    return GetResourcesByType;
+  }());
+  networkCall.GetResourcesByType = GetResourcesByType;
+
   var SaveResource = (function () {
     function SaveResource(resource) {
-      var docURL = "https://couchdb-076880.smileupps.com/nebulae_resources";
+      var docURL = config.dbURL + "nebulae_resources";
       return post(docURL, JSON.stringify(resource));
     }
     return SaveResource;
@@ -102,7 +133,7 @@ var networkCall;
 
   var SaveResourceType = (function () {
     function SaveResourceType(data) {
-      var docURL = "https://couchdb-076880.smileupps.com/nebulae_resource_types";
+      var docURL = config.dbURL + "nebulae_resource_types";
       return post(docURL, JSON.stringify(data));
     }
     return SaveResourceType;
