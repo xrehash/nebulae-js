@@ -21,6 +21,8 @@ var Model = (function () {
     self.searchTarget = ko.observable();
     self.resourceType = new ko.observable();
     self.resourceEditor = new ko.observable();
+    self.selectedResource = new ko.observable();
+    self.selectedResourceDetail = new ko.observable();
 
     // methods
     self.loadResourceTypeList = function () {
@@ -58,6 +60,10 @@ var Model = (function () {
         self.searchResourcesByType();
       }
     };
+    self.rowClicked = function (argObj, arg) {
+      self.selectedResource(argObj === self.selectedResource() ? undefined : argObj);
+      $.gevent.publish('spa-model-selected-resource-change', [self.selectedResource()]);
+    }
 
     self.displayNewResourceForm = function (resType) {
       if (!self.resourceEditor()) {
@@ -75,13 +81,31 @@ var Model = (function () {
     self.saveDoneHandler = function (evt, changeType, changes) {
       self.resourceEditor(undefined);
     };
+    self.selectedResourceChangeHandler = function (evt, changeType, changes) {
+      if (changeType) {
+        //load details of resource
+        networkCall.GetResource(changeType.id,
+          function (res) {
+            self.selectedResourceDetail(res);
+          },
+          function (err) {
+            console.log(err);
+            alert(err);
+          });
+      }
+    }
+
+
 
     self.init = function () {
       self.loadResourceTypeList();
       $.gevent.subscribe($(document), 'spa-model-cancel-resource-edit', self.cancelEditHandler);
       $.gevent.subscribe($(document), 'spa-model-save-resource-done', self.saveDoneHandler);
+      $.gevent.subscribe($(document), 'spa-model-selected-resource-change', self.selectedResourceChangeHandler);
       return true;
     };
+
+
 
 
     self.init();

@@ -39,12 +39,21 @@
           </tr>
         </thead>
         <tbody data-bind="foreach:searchResults">
-          <tr>
-            <td data-bind="text:name"></td>
+          <tr data-bind="click:$parent.rowClicked, css:{'selected': ($parent.selectedResource() == $data)}">
+            <td><span data-bind="text:name"></span></td>
           </tr>
         </tbody>
         <tfoot></tfoot>
       </table>
+    </div>
+    <div class="resourceViewer panel panel-success col-sm-6 comp" data-bind="visible:(selectedResource()?true:false)">
+      <h4 class="h4 heading" data-bind="text:selectedResource()?selectedResource().name + ' Details':''"></h4>
+      <div data-bind="with:selectedResourceDetail">
+        <dl data-bind="foreach:Object.getOwnPropertyNames($data)">
+          <dt data-bind="text:$data"></dt>
+          <dd data-bind="text:($parent)[$data]"></dd>
+        </dl>
+      </div>
     </div>
   </div>
 </div>

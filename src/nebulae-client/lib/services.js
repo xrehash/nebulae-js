@@ -91,8 +91,28 @@ var config = {
       return p;
     }
     return GetResourceTypes;
-  }());
+  })();
   networkCall.GetResourceTypes = GetResourceTypes;
+
+  var GetResource = (function () {
+    function GetResource(id, ok, problem) {
+      var queryURL = config.dbURL + "nebulae_resources/" + id;
+      var p = get(queryURL);
+      p.then(
+        function (response) {
+          var res = JSON.parse(response);
+          //console.log(res);
+          ok(res);
+        },
+        function (error) {
+          problem(error);
+        }
+      );
+      return p;
+    }
+    return GetResource;
+  })();
+  networkCall.GetResource = GetResource;
 
   //https://couchdb-076880.smileupps.com/nebulae_resources/_design/resources_views/_view/resourcesByType?key=%2220161131616_98826662250411%22&include_docs=true
   var GetResourcesByType = (function () {
@@ -119,7 +139,7 @@ var config = {
       return p;
     }
     return GetResourcesByType;
-  }());
+  })();
   networkCall.GetResourcesByType = GetResourcesByType;
 
   var SaveResource = (function () {

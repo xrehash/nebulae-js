@@ -43,6 +43,10 @@ table.results thead {
   color: #000;
 }
 
+table.results tr.selected {
+  background-color: darkorange;
+}
+
 table.results tr:hover {
   cursor: pointer;
 }
@@ -55,4 +59,13 @@ select.bigItem {
 
 .comp {
   float: left;
+}
+
+.resourceViewer dt {
+  font-weight: bold;
+}
+
+.resourceViewer dd {
+  margin-left: 4em;
+  font-size: 150%;
 }
