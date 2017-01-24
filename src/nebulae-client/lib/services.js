@@ -160,4 +160,14 @@ var config = {
   }());
   networkCall.SaveResourceType = SaveResourceType;
 
+  var SaveRelationType = (function () {
+    function SaveRelationType(relationType, done, err) {
+      var docURL = config.dbURL + "nebulae_relations";
+      var prom = post(docURL, JSON.stringify(relationType));
+      prom.then(done, err);
+    }
+    return SaveRelationType;
+  })();
+  networkCall.SaveRelationType = SaveRelationType;
+
 })(networkCall || (networkCall = {}));

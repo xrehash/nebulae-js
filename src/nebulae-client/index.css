@@ -1,15 +1,37 @@
 body {
     font-size: 14pt;
     font-family: 'Halant', serif;
-    background-color: rgba(145, 120, 122, 0.9);
+    background: rgb(5, 120, 122);
+    background-repeat: no-repeat;
+    background-image: linear-gradient(to bottom, rgba(5, 20, 102, 0.5) 0px, rgba(5, 120, 122, 0.5) 90%);
+    min-height: 1000px;
 }
 
 #screen {
-    /*background-color: rgba(220, 230, 240, 0.3);*/
+    background-color: rgba(220, 230, 240, 0.8);
     padding: 16px;
+    margin: 20pt;
+    border-radius: 6pt;
 }
 
-#screenMenu {}
+#screenMenu {
+    font-size: 12pt;
+    background-color: black;
+    font-family: 'Raleway', Arial, cursive;
+    text-align: right;
+}
+
+#screenMenu .pill {
+    margin-top: 6pt;
+    margin-left: 5pt;
+    margin-right: 1pt;
+    padding: 4pt 6pt;
+    cursor: pointer;
+}
+
+#screenMenu .pill:hover {
+    color: deepskyblue;
+}
 
 #mast {
     background-color: rgba(200, 160, 80, 1);
@@ -90,12 +112,8 @@ select {
     padding: 3pt;
 }
 
-#page button.btn {
-    font-size: 200% !important;
-}
-
 #page button.btn-xs {
-    font-size: 60% !important;
+    font-size: 100% !important;
 }
 
 div.schema-editor legend {

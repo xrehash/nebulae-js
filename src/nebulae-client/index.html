@@ -13,14 +13,17 @@
 </head>
 
 <body id="body">
-    <div id="screen" class="container-fluid">
+    <div id="screen" class="container">
         <div id="mast" class="row">
-            <div id="screenMenu" class="">
-            </div>
             <div id="banner">
                 <hi>Nebulae</hi>
             </div>
             <div id="header">
+                <div id="screenMenu" class="menuArea">
+                    <div data-bind="foreach:Components">
+                        <span class="pill" data-bind="click:Router.navigate, text:$data"></span>
+                    </div>
+                </div>
                 <div id="titleBlock" data-bind="text:PageTitle">PageTitle</div>
             </div>
         </div>

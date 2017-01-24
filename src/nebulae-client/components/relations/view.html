@@ -1,0 +1,16 @@
+<div class="component container-fluid">
+  <div class="row">
+    <button class="btn btn-default" data-bind="click:newRelTypeClick"><em class="fa fa-vcard"></em> New Type</button>
+    <div class="resourceTyepeEditor panel panel-sucess" data-bind="with:relationTypeEditorModel,visible:(relationTypeEditorModel()?true:false)">
+      <h4 class="h4 heading">Define Relationship Type</h4>
+      <div class="well well-sm">
+        <p>ID <em data-bind="text:relationshipType._id"></em></p>
+        <label for="relationName">Name</label> <input type="text" data-bind="value:relationshipType.name" />
+        <label for="sourceResourceType">Source</label> <select class="" name="sourceResourceType" data-bind="value:relationshipType.sourceType,optionsText:'name',optionsValue:'id',optionsCaption:'Choose Type...',valueAllowUnset:true,options:listResourceTypes"></select>
+        <label for="targetResourceType">Target</label> <select class="" name="targetResourceType" data-bind="value:relationshipType.targetType,optionsText:'name',optionsValue:'id',optionsCaption:'Choose Type...',valueAllowUnset:true,options:listResourceTypes"></select>
+        <button class="btn btn-success" data-bind="click:saveClick"><em class="fa fa-check"></em> Save</button>
+        <button class="btn btn-warning" data-bind="click:cancelClick"><em class="fa fa-ban"></em> Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

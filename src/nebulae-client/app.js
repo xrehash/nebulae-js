@@ -22,6 +22,7 @@ var zApp = function () {
     };
 
     self.PageTitle = ko.observable("");
+    self.Components = ko.observableArray(['home', 'wee', 'relations', 'resource', 'resource_types']);
 
     self.present = function (comp) {
         var view = 'components/' + comp + '/view.html';

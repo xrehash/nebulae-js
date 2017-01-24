@@ -13,4 +13,7 @@ var Model = function (App) {
     self.go2 = function () {
         Router.navigate("resource");
     };
+    self.go3 = function () {
+        Router.navigate("relations");
+    };
 };

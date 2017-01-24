@@ -31,7 +31,8 @@ var nebulae;
     nebulae.Resource = Resource;
 
     var RelationshipType = (function () {
-        function RelationshipType(name, sourceType, targetType) {
+        function RelationshipType(id, name, sourceType, targetType) {
+            this._id = id;
             this.name = name;
             this.sourceType = sourceType;
             this.targetType = targetType;
@@ -41,7 +42,8 @@ var nebulae;
     nebulae.RelationshipType = RelationshipType;
 
     var Relationship = (function () {
-        function Relationship(family, source, target) {
+        function Relationship(id, family, source, target) {
+            this._id = id;
             this.family = family;
             this.source = source;
             this.target = target;
