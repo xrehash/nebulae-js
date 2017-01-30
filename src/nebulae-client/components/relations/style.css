@@ -3,3 +3,33 @@
 button.btn {
   font-size: 100% !important;
 }
+
+.heading {
+  font-size: default;
+  font-size: 100%;
+  line-height: 140%;
+}
+
+.box {
+  border: 0mm #000 solid;
+  border-radius: 2mm;
+  background-color: rgba(220, 180, 100, 0.4);
+  box-shadow: 0 3px 3px rgba(0, 0, 0, .5);
+  padding: 5px;
+  margin: 5mm;
+}
+
+.box .heading {
+  border-bottom-style: solid;
+}
+
+.box .heading em {
+  font-style: normal;
+  font-weight: 400;
+  color: rgba(80, 90, 250, 1);
+}
+
+.box select {
+  width: 100%;
+  cursor: pointer
+}

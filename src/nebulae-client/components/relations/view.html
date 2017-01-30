@@ -1,7 +1,8 @@
 <div class="component container-fluid">
   <div class="row">
     <button class="btn btn-default" data-bind="click:newRelTypeClick"><em class="fa fa-vcard"></em> New Type</button>
-    <div class="resourceTyepeEditor panel panel-sucess" data-bind="with:relationTypeEditorModel,visible:(relationTypeEditorModel()?true:false)">
+    <button class="btn btn-default" data-bind="click:relEditorClick"><em class="fa fa-map-signs"></em> Update Relations</button>
+    <div class="relationshipTyepeEditor panel panel-sucess" data-bind="with:relationTypeEditorModel,visible:(relationTypeEditorModel()?true:false)">
       <h4 class="h4 heading">Define Relationship Type</h4>
       <div class="well well-sm">
         <p>ID <em data-bind="text:relationshipType._id"></em></p>
@@ -10,6 +11,28 @@
         <label for="targetResourceType">Target</label> <select class="" name="targetResourceType" data-bind="value:relationshipType.targetType,optionsText:'name',optionsValue:'id',optionsCaption:'Choose Type...',valueAllowUnset:true,options:listResourceTypes"></select>
         <button class="btn btn-success" data-bind="click:saveClick"><em class="fa fa-check"></em> Save</button>
         <button class="btn btn-warning" data-bind="click:cancelClick"><em class="fa fa-ban"></em> Cancel</button>
+      </div>
+    </div>
+    <div class="relationshipEditor panel" data-bind="with:relationshipEditor, visible:(relationshipEditor()?true:false)">
+      <div>
+        <div class="text-right">
+          <button data-bind="click:cancel" class="btn-warning btn-xs"><em class=" fa fa-ban"></em> cancel</button>
+          <button data-bind="click:save" class="btn-success btn-xs"><em class=" fa fa-check"></em> save</button></div>
+        <h4 class="h4 heading">Relationship Definition</h4>
+        <div class="row">
+          <div class="col-sm-3 box">
+            <h5 class="h5 heading">Type</h5>
+            <select class="" data-bind="value:selectedType,options:relationshipTypeList,optionsText:'key',optionsValue:'doc'" size="6"></select>
+          </div>
+          <div class="col-sm-3 box">
+            <h5 class="h5 heading">Source <em data-bind="text:sourceTypeName"></em></h5>
+            <select class="" data-bind="value:relationship().source,options:sourceList,optionsText:'name',optionsValue:'_id'" size="6"></select>
+          </div>
+          <div class="col-sm-3 box">
+            <h5 class="h5 heading">Target <em data-bind="text:targetTypeName"></em></h5>
+            <select class="" data-bind="value:relationship().target,options:targetList,optionsText:'name',optionsValue:'_id'" size="6"></select>
+          </div>
+        </div>
       </div>
     </div>
   </div>

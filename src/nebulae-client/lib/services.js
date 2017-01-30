@@ -94,6 +94,29 @@ var config = {
   })();
   networkCall.GetResourceTypes = GetResourceTypes;
 
+  var GetRelationshipTypes = (function () {
+    function GetRelationshipTypes(ok, problem) {
+      var queryURL = config.dbURL + "nebulae_relations/_design/relations/_view/relationship_types?include_docs=true";
+      //console.log(queryURL);
+      var p = get(queryURL);
+      p.then(
+        function (response) {
+          var rr = JSON.parse(response);
+          console.log(rr.rows);
+
+          //console.log(listData);
+          ok(rr.rows);
+        },
+        function (error) {
+          problem(error);
+        }
+      );
+      return p;
+    }
+    return GetRelationshipTypes;
+  })();
+  networkCall.GetRelationshipTypes = GetRelationshipTypes;
+
   var GetResource = (function () {
     function GetResource(id, ok, problem) {
       var queryURL = config.dbURL + "nebulae_resources/" + id;
@@ -159,6 +182,21 @@ var config = {
     return SaveResourceType;
   }());
   networkCall.SaveResourceType = SaveResourceType;
+
+  var GetResourceType = (function () {
+    function GetResourceType(resourceTypeId, ok, error) {
+      var docURL = config.dbURL + "nebulae_resource_types/" + resourceTypeId;
+      var p = get(docURL);
+      p.then(function (data) {
+        var dObj = JSON.parse(data);
+        ok(dObj);
+      }, error);
+      return p;
+    }
+    return GetResourceType;
+  })();
+  networkCall.GetResourceType = GetResourceType;
+
 
   var SaveRelationType = (function () {
     function SaveRelationType(relationType, done, err) {
