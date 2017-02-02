@@ -33,3 +33,15 @@ button.btn {
   width: 100%;
   cursor: pointer
 }
+
+#browserSearch select {
+  font-style: oblique;
+  color: lightgray;
+}
+
+#browserSearch select.on,
+#browserSearch input {
+  font-style: normal;
+  font-weight: bold;
+  color: black;
+}

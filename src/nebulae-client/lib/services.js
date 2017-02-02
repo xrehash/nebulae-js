@@ -149,6 +149,7 @@ var config = {
           var listData = rr.rows.map((v, i, s) => {
             return {
               id: v.id,
+              _id: v.id,
               name: v.value
             }
           });
@@ -164,6 +165,32 @@ var config = {
     return GetResourcesByType;
   })();
   networkCall.GetResourcesByType = GetResourcesByType;
+
+  var SearchForRelations = (function () {
+    function SearchForRelations(queryConf, ok, err) {
+      var queryURL = config.dbURL + 'nebulae_relations/_design/relations/_view/';
+      var query = "";
+      if (queryConf && queryConf.relationshipType) {
+        queryURL += 'byType';
+        query += ('?key="' + queryConf.relationshipType + '"');
+      }
+      queryURL = queryURL + encodeURI(query);
+      console.log(queryURL);
+      get(queryURL).then(ok, err);
+    }
+    return SearchForRelations;
+  })();
+  networkCall.SearchForRelations = SearchForRelations;
+
+  var SaveRelationship = (function () {
+    function SaveRelationship(relation, done, err) {
+      var docURL = config.dbURL + "nebulae_relations";
+      var prom = post(docURL, JSON.stringify(relation));
+      prom.then(done, err);
+    }
+    return SaveRelationship;
+  })();
+  networkCall.SaveRelationship = SaveRelationship;
 
   var SaveResource = (function () {
     function SaveResource(resource) {
@@ -196,7 +223,6 @@ var config = {
     return GetResourceType;
   })();
   networkCall.GetResourceType = GetResourceType;
-
 
   var SaveRelationType = (function () {
     function SaveRelationType(relationType, done, err) {

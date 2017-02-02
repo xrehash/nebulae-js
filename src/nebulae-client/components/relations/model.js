@@ -31,7 +31,12 @@ var RelationshipTypeEditorViewModel = (function () {
 var RelationshipEditorViewModel = (function () {
   function RelationshipEditorViewModel(relationship, relationshipTypeList) {
     var self = this;
-    self.relationship = new ko.observable(relationship);
+    self.relationship = {
+      _id: relationship._id,
+      family: new ko.observable(relationship.family),
+      source: new ko.observable(relationship.source),
+      target: new ko.observable(relationship.target)
+    };
     self.relationshipTypeList = relationshipTypeList;
     self.selectedType = new ko.observable();
     self.sourceList = new ko.observableArray();
@@ -50,11 +55,13 @@ var RelationshipEditorViewModel = (function () {
     };
 
     self.updateAvailableResources = function () {
-      self.relationship().family = self.selectedType()._id;
-      self.relationship().source = self.relationship().target = undefined;
+      self.relationship.family(self.selectedType()._id);
+      self.relationship.source(undefined);
+      self.relationship.target(undefined);
       networkCall.GetResourcesByType(self.selectedType().sourceType,
         function (data) {
           self.sourceList(data.sort(self.nameSortFn));
+          console.log(self.sourceList());
         },
         function (error) {
           console.log(error);
@@ -91,7 +98,18 @@ var RelationshipEditorViewModel = (function () {
       $.gevent.publish('spa-model-cancel-relationship-edit', []);
     };
     self.save = function () {
-      $.gevent.publish('spa-model-save-relationship-edit', []);
+      var data = {
+        _id: self.relationship._id,
+        family: self.relationship.family(),
+        source: self.relationship.source(),
+        target: self.relationship.target()
+      };
+      console.log(data);
+      networkCall.SaveRelationship(data, function () {
+        $.gevent.publish('spa-model-save-relationship-edit', []);
+      }, function (error) {
+        console.log(error);
+      })
     };
     self.init = function () {
       self.selectedType.subscribe(self.updateAvailableResources);
@@ -104,6 +122,45 @@ var RelationshipEditorViewModel = (function () {
   return RelationshipEditorViewModel;
 })();
 
+var RelationshipBrowserViewModel = (function () {
+  function RelationshipBrowserViewModel(ResourceTypeList, RelationshipTypeList) {
+    var self = this;
+    self.resourceTypeList = ResourceTypeList;
+    self.relationshipTypeList = RelationshipTypeList;
+    self.searchCriteria = ko.observable();
+    self.relationshipBag = ko.observableArray();
+    self.resourceBag = ko.observableArray();
+
+    self.resetSearch = function () {
+      self.searchCriteria({
+        sourceName: new ko.observable(),
+        relationshipType: new ko.observable(),
+        targetName: new ko.observable()
+      });
+    };
+    self.searchClick = function () {
+      console.log(self.searchCriteria().relationshipType());
+      networkCall.SearchForRelations({
+        relationshipType: self.searchCriteria().relationshipType()._id,
+        sourceName: self.searchCriteria().sourceName()
+      }, function (response) {
+        console.log(response);
+      }, function (error) {
+        console.log(error);
+      });
+    };
+
+    self.init = function () {
+      self.resetSearch();
+    };
+
+    self.init();
+
+  }
+  return RelationshipBrowserViewModel;
+})();
+
+
 var Model = (function () {
   function ViewModel(App) {
     var self = this;
@@ -112,12 +169,17 @@ var Model = (function () {
     self.listResourceTypes = new ko.observableArray();
     self.relationTypeEditorModel = new ko.observable();
     self.relationshipEditor = new ko.observable();
+    self.relationshipBrowser = new ko.observable();
     self.relationshipTypeList = new ko.observableArray();
 
     self.nameSortFn = (a, b) => {
       return a.name == b.name ? 0 : (a.name > b.name ? 1 : -1);
     };
 
+    self.browseClick = function () {
+      if (!self.relationshipBrowser())
+        self.relationshipBrowser(new RelationshipBrowserViewModel(self.listResourceTypes, self.relationshipTypeList));
+    };
     self.loadResourceTypeList = function () {
       networkCall.GetResourceTypes(function (listData) {
           //console.log(listData);
@@ -162,12 +224,17 @@ var Model = (function () {
     self.cancelRelationshipEditHandler = function (evt, changeType, changes) {
       self.relationshipEditor(undefined);
     };
+    self.saveRelationshipEditHandler = function (evt, changeType, changes) {
+      self.editRelationship(undefined);
+      self.relationshipEditor(undefined);
+    };
 
     self.init = function () {
 
       $.gevent.subscribe($(document), 'spa-model-cancel-relationshiptype-edit', self.cancelEditHandler);
       $.gevent.subscribe($(document), 'spa-model-save-relationshiptype-edit', self.saveEditHandler);
       $.gevent.subscribe($(document), 'spa-model-cancel-relationship-edit', self.cancelRelationshipEditHandler);
+      $.gevent.subscribe($(document), 'spa-model-save-relationship-edit', self.saveRelationshipEditHandler);
       self.loadResourceTypeList();
       self.loadRelationshipTypeList();
     };

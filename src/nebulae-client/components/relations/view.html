@@ -2,6 +2,9 @@
   <div class="row">
     <button class="btn btn-default" data-bind="click:newRelTypeClick"><em class="fa fa-vcard"></em> New Type</button>
     <button class="btn btn-default" data-bind="click:relEditorClick"><em class="fa fa-map-signs"></em> Update Relations</button>
+    <button class="btn btn-default" data-bind="click:browseClick"><em class="fa fa-list-alt"></em> Browse</button>
+  </div>
+  <div>
     <div class="relationshipTyepeEditor panel panel-sucess" data-bind="with:relationTypeEditorModel,visible:(relationTypeEditorModel()?true:false)">
       <h4 class="h4 heading">Define Relationship Type</h4>
       <div class="well well-sm">
@@ -26,13 +29,24 @@
           </div>
           <div class="col-sm-3 box">
             <h5 class="h5 heading">Source <em data-bind="text:sourceTypeName"></em></h5>
-            <select class="" data-bind="value:relationship().source,options:sourceList,optionsText:'name',optionsValue:'_id'" size="6"></select>
+            <select class="" data-bind="value:relationship.source,options:sourceList,optionsText:'name',optionsValue:'_id'" size="6"></select>
           </div>
           <div class="col-sm-3 box">
             <h5 class="h5 heading">Target <em data-bind="text:targetTypeName"></em></h5>
-            <select class="" data-bind="value:relationship().target,options:targetList,optionsText:'name',optionsValue:'_id'" size="6"></select>
+            <select class="" data-bind="value:relationship.target,options:targetList,optionsText:'name',optionsValue:'_id'" size="6"></select>
           </div>
         </div>
+      </div>
+    </div>
+    <div class="relationshipBrowser panel" data-bind="with:relationshipBrowser, visible:(relationshipBrowser()?true:false)">
+      <div>
+        <h3 class="heading h3">Relationship Browser</h3>
+      </div>
+      <div id='browserSearch' data-bind="with:searchCriteria">
+        <select class="" data-bind="value:relationshipType,options:$parent.relationshipTypeList,optionsText:'key',optionsValue:'doc',optionsCaption:'Relationship Type',css:{'on':relationshipType()}"></select>
+        <label>Source <input class="" name="sourceName" data-bind="value:sourceName" title="Source" /></label>
+        <label>Target <input class="" name="targetName" data-bind="value:targetName" title="Target" /></label>
+        <button class="btn btn-success" data-bind="click:$parent.searchClick,enable:(relationshipType()||sourceName()||targetName())"><em class="fa fa-search"></em> Search</button>
       </div>
     </div>
   </div>
