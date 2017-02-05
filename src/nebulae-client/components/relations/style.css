@@ -36,7 +36,7 @@ button.btn {
 
 #browserSearch select {
   font-style: oblique;
-  color: lightgray;
+  color: darkgray;
 }
 
 #browserSearch select.on,
@@ -44,4 +44,19 @@ button.btn {
   font-style: normal;
   font-weight: bold;
   color: black;
+}
+
+#browsePanel table {
+  font-family: Consolas, 'Courier Prime', 'Courier New', Courier, monospace;
+}
+
+#browseGraphic {
+  min-height: 600px;
+  font-family: Consolas, 'Courier Prime', 'Courier New', Courier, monospace;
+  font-size: 9pt;
+  background-color: wheat;
+  color: black;
+  border: 0.5pt solid black;
+  border-radius: 3pt;
+  margin: 0px 12pt;
 }

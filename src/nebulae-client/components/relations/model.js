@@ -140,18 +140,46 @@ var RelationshipBrowserViewModel = (function () {
     };
     self.searchClick = function () {
       console.log(self.searchCriteria().relationshipType());
+      self.relationshipBag(undefined);
       networkCall.SearchForRelations({
         relationshipType: self.searchCriteria().relationshipType()._id,
         sourceName: self.searchCriteria().sourceName()
       }, function (response) {
-        console.log(response);
+        // on success
+        var json = JSON.parse(response);
+        self.relationshipBag(json.rows);
+        //console.log(json.rows);
+        $.gevent.publish('spa-model-browser-relationships-change');
       }, function (error) {
         console.log(error);
       });
     };
 
+    self.getRes = function (resId) {
+      return self.resourceBag().find(function (val, idx) {
+        if (val._id == resId)
+          return true;
+      });
+    };
+
+    self.updateResources = function () {
+      if (self.relationshipBag().length) {
+        var data = [];
+        self.relationshipBag().forEach(function (item) {
+          //console.log(item);
+          if (!data.includes(item.value.source)) data.push(item.value.source);
+          if (!data.includes(item.value.target)) data.push(item.value.target)
+        });
+        networkCall.GetResources(data, function (ans) {
+          //console.log(ans);
+          self.resourceBag(ans);
+        }, console.log);
+      }
+    };
+
     self.init = function () {
       self.resetSearch();
+      $.gevent.subscribe($(document), 'spa-model-browser-relationships-change', self.updateResources);
     };
 
     self.init();
@@ -235,6 +263,7 @@ var Model = (function () {
       $.gevent.subscribe($(document), 'spa-model-save-relationshiptype-edit', self.saveEditHandler);
       $.gevent.subscribe($(document), 'spa-model-cancel-relationship-edit', self.cancelRelationshipEditHandler);
       $.gevent.subscribe($(document), 'spa-model-save-relationship-edit', self.saveRelationshipEditHandler);
+
       self.loadResourceTypeList();
       self.loadRelationshipTypeList();
     };
