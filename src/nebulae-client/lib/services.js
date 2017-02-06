@@ -102,7 +102,7 @@ var config = {
       p.then(
         function (response) {
           var rr = JSON.parse(response);
-          console.log(rr.rows);
+          //console.log(rr.rows);
 
           //console.log(listData);
           ok(rr.rows);

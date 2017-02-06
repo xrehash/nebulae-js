@@ -122,6 +122,46 @@ var RelationshipEditorViewModel = (function () {
   return RelationshipEditorViewModel;
 })();
 
+var RelationshipDisplay = (function () {
+  function RelationshipDisplay(relationship, resources) {
+    var self = this;
+    self.core = relationship;
+    self.resources = resources;
+    self.srcDetail = ko.observable();
+    self.tgtDetail = ko.observable();
+    self.getRes = function (resId) {
+      return self.resources().find(function (val, idx) {
+        if (val._id == resId)
+          return true;
+      });
+    };
+    self.source = new ko.computed(function () {
+      return self.getRes(self.core.value.source)
+    });
+    self.target = new ko.computed(function () {
+      return self.getRes(self.core.value.target)
+    });
+    self.toggleSrcDetailClick = function () {
+      //alert(self.core.key)
+      if (self.srcDetail()) {
+        self.srcDetail(undefined);
+      } else {
+        self.srcDetail(self.source());
+      }
+    }
+    self.toggleTgtDetailClick = function () {
+      //alert(self.core.key)
+      if (self.tgtDetail()) {
+        self.tgtDetail(undefined);
+      } else {
+        self.tgtDetail(self.target());
+      }
+    }
+
+  };
+  return RelationshipDisplay;
+})();
+
 var RelationshipBrowserViewModel = (function () {
   function RelationshipBrowserViewModel(ResourceTypeList, RelationshipTypeList) {
     var self = this;
@@ -147,28 +187,25 @@ var RelationshipBrowserViewModel = (function () {
       }, function (response) {
         // on success
         var json = JSON.parse(response);
-        self.relationshipBag(json.rows);
-        //console.log(json.rows);
+        self.relationshipBag(json.rows.map(function (r) {
+          return new RelationshipDisplay(r, self.resourceBag);
+        }));
+        //console.log(self.relationshipBag());
         $.gevent.publish('spa-model-browser-relationships-change');
       }, function (error) {
         console.log(error);
       });
     };
 
-    self.getRes = function (resId) {
-      return self.resourceBag().find(function (val, idx) {
-        if (val._id == resId)
-          return true;
-      });
-    };
+
 
     self.updateResources = function () {
       if (self.relationshipBag().length) {
         var data = [];
         self.relationshipBag().forEach(function (item) {
           //console.log(item);
-          if (!data.includes(item.value.source)) data.push(item.value.source);
-          if (!data.includes(item.value.target)) data.push(item.value.target)
+          if (!data.includes(item.core.value.source)) data.push(item.core.value.source);
+          if (!data.includes(item.core.value.target)) data.push(item.core.value.target)
         });
         networkCall.GetResources(data, function (ans) {
           //console.log(ans);
@@ -181,9 +218,7 @@ var RelationshipBrowserViewModel = (function () {
       self.resetSearch();
       $.gevent.subscribe($(document), 'spa-model-browser-relationships-change', self.updateResources);
     };
-
     self.init();
-
   }
   return RelationshipBrowserViewModel;
 })();
@@ -228,7 +263,7 @@ var Model = (function () {
     self.newRelTypeClick = function () {
       var relationshipType = new nebulae.RelationshipType(nebulae.newId());
       self.editRelationType(relationshipType);
-    }
+    };
     self.relEditorClick = function () {
       var relationship = new nebulae.Relationship(nebulae.newId());
       self.editRelationship(relationship);
@@ -237,11 +272,11 @@ var Model = (function () {
       if (!self.relationshipEditor()) {
         self.relationshipEditor(new RelationshipEditorViewModel(relationship, self.relationshipTypeList));
       }
-    }
+    };
     self.editRelationType = function (relType) {
       if (!self.relationTypeEditorModel())
         self.relationTypeEditorModel(new RelationshipTypeEditorViewModel(relType, self.listResourceTypes));
-    }
+    };
     self.cancelEditHandler = function (evt, changeType, changes) {
       self.relationTypeEditorModel(undefined);
       self.loadRelationshipTypeList();

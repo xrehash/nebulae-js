@@ -60,3 +60,37 @@ button.btn {
   border-radius: 3pt;
   margin: 0px 12pt;
 }
+
+.handle {
+  cursor: pointer;
+}
+
+div.resourceDisplay {
+  border: 1.5pt solid darkblue;
+  border-radius: 5px;
+  color: black;
+}
+
+div.resourceDisplay .label {
+  color: darkgray;
+  margin: 0px;
+  padding: 0px;
+  text-align: left;
+}
+
+.control-box {
+  text-align: right;
+}
+
+div.resourceDisplay button.btn {
+  color: rgba(80, 90, 250, 1);
+  border-radius: 50%;
+  width: 2em;
+  padding: 2pt;
+}
+
+.header {
+  background-color: rgba(80, 90, 250, 1);
+  color: gainsboro;
+  padding: 2px;
+}
