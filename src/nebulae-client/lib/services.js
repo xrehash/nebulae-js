@@ -195,6 +195,12 @@ var config = {
       if (queryConf && queryConf.relationshipType) {
         queryURL += 'byType';
         query += ('?key="' + queryConf.relationshipType + '"');
+      } else if (queryConf && queryConf.source) {
+        queryURL += 'bySource';
+        query += ('?key="' + queryConf.source + '"');
+      } else if (queryConf && queryConf.target) {
+        queryURL += 'byTarget';
+        query += ('?key="' + queryConf.target + '"');
       }
       queryURL = queryURL + encodeURI(query);
       console.log(queryURL);

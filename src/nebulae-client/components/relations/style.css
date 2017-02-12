@@ -66,8 +66,8 @@ button.btn {
 }
 
 div.resourceDisplay {
-  border: 1.5pt solid darkblue;
-  border-radius: 5px;
+  border-bottom: 0.5pt solid gainsboro;
+  border-radius: 0px;
   color: black;
 }
 
@@ -83,14 +83,15 @@ div.resourceDisplay .label {
 }
 
 div.resourceDisplay button.btn {
-  color: rgba(80, 90, 250, 1);
+  /*color: rgba(80, 90, 250, 1);*/
+  background-color: transparent;
   border-radius: 50%;
   width: 2em;
   padding: 2pt;
 }
 
-.header {
-  background-color: rgba(80, 90, 250, 1);
-  color: gainsboro;
-  padding: 2px;
+.header span {
+  /*background-color: rgba(80, 90, 250, 1);
+  color: gainsboro;*/
+  font-size: 130%;
 }

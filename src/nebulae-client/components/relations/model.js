@@ -123,17 +123,33 @@ var RelationshipEditorViewModel = (function () {
 })();
 
 var RelationshipDisplay = (function () {
-  function RelationshipDisplay(relationship, resources) {
+  function RelationshipDisplay(relationship, resources, relationshipTypes) {
     var self = this;
     self.core = relationship;
     self.resources = resources;
+    self.relationshipTypes = relationshipTypes;
     self.srcDetail = ko.observable();
     self.tgtDetail = ko.observable();
     self.getRes = function (resId) {
       return self.resources().find(function (val, idx) {
-        if (val._id == resId)
+        if (val && val._id == resId)
           return true;
       });
+    };
+    self.getRelType = function (typeId) {
+      //console.log(self.relationshipTypes());
+      return self.relationshipTypes().find(function (val, idx) {
+        if (val && val.id == typeId)
+          return true;
+      });
+    };
+    self.family = function (typeId) {
+      var rT = self.getRelType(typeId);
+      //console.log("WAAAAAAAAAAAAAAAAAAA", rT);
+      if (rT && rT.doc.name)
+        return rT.doc.name;
+      else
+        return undefined;
     };
     self.source = new ko.computed(function () {
       return self.getRes(self.core.value.source)
@@ -157,6 +173,14 @@ var RelationshipDisplay = (function () {
         self.tgtDetail(self.target());
       }
     }
+    self.doSourceSearch = function (obj) {
+      //console.log(obj);
+      $.gevent.publish('spa-model-browser-relationships-source-search', obj);
+    }
+    self.doTargetSearch = function (obj) {
+      //console.log(obj);
+      $.gevent.publish('spa-model-browser-relationships-target-search', obj);
+    }
 
   };
   return RelationshipDisplay;
@@ -178,17 +202,13 @@ var RelationshipBrowserViewModel = (function () {
         targetName: new ko.observable()
       });
     };
-    self.searchClick = function () {
-      console.log(self.searchCriteria().relationshipType());
+    self.search = function (searchParam) {
       self.relationshipBag(undefined);
-      networkCall.SearchForRelations({
-        relationshipType: self.searchCriteria().relationshipType()._id,
-        sourceName: self.searchCriteria().sourceName()
-      }, function (response) {
+      networkCall.SearchForRelations(searchParam, function (response) {
         // on success
         var json = JSON.parse(response);
         self.relationshipBag(json.rows.map(function (r) {
-          return new RelationshipDisplay(r, self.resourceBag);
+          return new RelationshipDisplay(r, self.resourceBag, self.relationshipTypeList);
         }));
         //console.log(self.relationshipBag());
         $.gevent.publish('spa-model-browser-relationships-change');
@@ -196,8 +216,30 @@ var RelationshipBrowserViewModel = (function () {
         console.log(error);
       });
     };
+    self.searchClick = function () {
+      //console.log(self.searchCriteria().relationshipType());
+      self.search({
+        relationshipType: self.searchCriteria().relationshipType()._id,
+        sourceName: self.searchCriteria().sourceName()
+      });
+    };
 
-
+    self.doSourceSearch = function (obj, arg) {
+      //console.log(obj, arg);
+      self.resetSearch();
+      self.searchCriteria().sourceName(arg.name);
+      self.search({
+        source: arg._id
+      });
+    };
+    self.doTargetSearch = function (obj, arg) {
+      //console.log(obj, arg);
+      self.resetSearch();
+      self.searchCriteria().targetName(arg.name);
+      self.search({
+        target: arg._id
+      });
+    };
 
     self.updateResources = function () {
       if (self.relationshipBag().length) {
@@ -217,6 +259,8 @@ var RelationshipBrowserViewModel = (function () {
     self.init = function () {
       self.resetSearch();
       $.gevent.subscribe($(document), 'spa-model-browser-relationships-change', self.updateResources);
+      $.gevent.subscribe($(document), 'spa-model-browser-relationships-source-search', self.doSourceSearch);
+      $.gevent.subscribe($(document), 'spa-model-browser-relationships-target-search', self.doTargetSearch);
     };
     self.init();
   }

@@ -56,6 +56,7 @@
               <tr>
                 <th>&nbsp;</th>
                 <th>Source</th>
+                <th>Relationship</th>
                 <th>Target</th>
               </tr>
             </thead>
@@ -65,13 +66,18 @@
                 <td data-bind="with:source()">
                   <div class="resourceDisplay container-fluid resourceDisplay">
                     <div class="row header">
-                      <span class="col-xs-8" data-bind="text:name"></span>
-                      <div class="col-xs-4 control-box">
-                        <button class="btn btn-xs btn-warning">
-                          <em class="fa fa-rocket"></em>
+                      <div class="col-xs-1 col-lg-1 control-box">
+                        <button title="expand/collapse" class="btn btn-xs" data-bind="click:$parent.toggleSrcDetailClick"><em data-bind="css:{'fa-chevron-right':(!($parent.srcDetail())), 'fa-chevron-down':($parent.srcDetail())}" class="handle fa "></em>
                         </button>
-                        <button title="expand/collapse" class="btn btn-xs" data-bind="click:$parent.toggleSrcDetailClick"><em data-bind="css:{'fa-chevron-left':(!($parent.srcDetail())), 'fa-chevron-down':($parent.srcDetail())}"
-                        class="handle fa "></em></button>
+                      </div>
+                      <span class="col-xs-8 col-lg-8" data-bind="text:name"></span>
+                      <div class="col-xs-2 col-lg-2 control-box">
+                        <button class="btn btn-xs" title="source search" data-bind="click:$parent.doSourceSearch">
+                          <em class="fa fa-sign-out"></em>
+                        </button>
+                        <button class="btn btn-xs" title="target search" data-bind="click:$parent.doTargetSearch">
+                          <em class="fa fa-sign-in"></em>
+                        </button>
                       </div>
                     </div>
                     <div class="row" data-bind="with:$parent.srcDetail">
@@ -82,16 +88,25 @@
                     </div>
                   </div>
                 </td>
+                <td>
+                  <span data-bind="text:family(core.value.type._id)"></span>
+                </td>
                 <td data-bind="with:target()">
                   <div class="resourceDisplay container-fluid resourceDisplay">
                     <div class="row header">
-                      <span class="col-xs-8" data-bind="text:name"></span>
-                      <div class="col-xs-4 control-box">
-                        <button class="btn btn-xs btn-warning">
-                          <em class="fa fa-rocket"></em>
-                        </button>
-                        <button title="expand/collapse" class="btn btn-xs" data-bind="click:$parent.toggleTgtDetailClick"><em data-bind="css:{'fa-chevron-left':(!($parent.tgtDetail())), 'fa-chevron-down':($parent.tgtDetail())}"
+                      <div class="col-xs-1 control-box">
+                        <button title="expand/collapse" class="btn btn-xs" data-bind="click:$parent.toggleTgtDetailClick"><em data-bind="css:{'fa-chevron-right':(!($parent.tgtDetail())), 'fa-chevron-down':($parent.tgtDetail())}"
                         class="handle fa "></em></button></div>
+                      <span class="col-xs-8" data-bind="text:name"></span>
+                      <div class="col-xs-2 control-box">
+                        <button class="btn btn-xs" title="source search" data-bind="click:$parent.doSourceSearch">
+                          <em class="fa fa-sign-out"></em>
+                        </button>
+                        <button class="btn btn-xs" title="target search" data-bind="click:$parent.doTargetSearch">
+                          <em class="fa fa-sign-in"></em>
+                        </button>
+                        <!--<button title="expand/collapse" class="btn btn-xs" data-bind="click:$parent.toggleTgtDetailClick"><em data-bind="css:{'fa-chevron-left':(!($parent.tgtDetail())), 'fa-chevron-down':($parent.tgtDetail())}"
+                        class="handle fa "></em></button>--></div>
                     </div>
                     <div class="row" data-bind="with:$parent.tgtDetail">
                       <div data-bind="foreach:Object.getOwnPropertyNames($data)">
