@@ -14,17 +14,25 @@ var nebulae;
     nebulae.ResourceType = ResourceType;
 
     var Resource = (function () {
-        function Resource(name, parent, resourceType) {
-            this.name = name;
-            this.parent = parent;
+        function Resource(id, name, resourceType) {
+            var self = this;
+            this._id = id;
+            this.name = ko.observable(name);
             this.resourceType = resourceType;
+
+            if (resourceType.schema && resourceType.schema.length) {
+                resourceType.schema.map(function (v, i, Arr) {
+                    self[Object.getOwnPropertyNames(v)[0]] = ko.observable();
+                });
+            }
         }
         return Resource;
     }());
     nebulae.Resource = Resource;
 
     var RelationshipType = (function () {
-        function RelationshipType(name, sourceType, targetType) {
+        function RelationshipType(id, name, sourceType, targetType) {
+            this._id = id;
             this.name = name;
             this.sourceType = sourceType;
             this.targetType = targetType;
@@ -34,7 +42,8 @@ var nebulae;
     nebulae.RelationshipType = RelationshipType;
 
     var Relationship = (function () {
-        function Relationship(family, source, target) {
+        function Relationship(id, family, source, target) {
+            this._id = id;
             this.family = family;
             this.source = source;
             this.target = target;
@@ -42,5 +51,11 @@ var nebulae;
         return Relationship;
     }());
     nebulae.Relationship = Relationship;
+
+    nebulae.newId = function () {
+        var dt = new Date();
+        var num = Math.floor(Math.random() * 100 * Date.now());
+        return "" + dt.getFullYear() + dt.getMonth() + dt.getDay() + dt.getHours() + dt.getMinutes() + "_" + num;
+    };
 
 })(nebulae || (nebulae = {}));

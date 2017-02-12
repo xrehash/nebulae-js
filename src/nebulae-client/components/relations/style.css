@@ -1,0 +1,97 @@
+/* relations */
+
+button.btn {
+  font-size: 100% !important;
+}
+
+.heading {
+  font-size: default;
+  font-size: 100%;
+  line-height: 140%;
+}
+
+.box {
+  border: 0mm #000 solid;
+  border-radius: 2mm;
+  background-color: rgba(220, 180, 100, 0.4);
+  box-shadow: 0 3px 3px rgba(0, 0, 0, .5);
+  padding: 5px;
+  margin: 5mm;
+}
+
+.box .heading {
+  border-bottom-style: solid;
+}
+
+.box .heading em {
+  font-style: normal;
+  font-weight: 400;
+  color: rgba(80, 90, 250, 1);
+}
+
+.box select {
+  width: 100%;
+  cursor: pointer
+}
+
+#browserSearch select {
+  font-style: oblique;
+  color: darkgray;
+}
+
+#browserSearch select.on,
+#browserSearch input {
+  font-style: normal;
+  font-weight: bold;
+  color: black;
+}
+
+#browsePanel table {
+  font-family: Consolas, 'Courier Prime', 'Courier New', Courier, monospace;
+}
+
+#browseGraphic {
+  min-height: 600px;
+  font-family: Consolas, 'Courier Prime', 'Courier New', Courier, monospace;
+  font-size: 9pt;
+  background-color: wheat;
+  color: black;
+  border: 0.5pt solid black;
+  border-radius: 3pt;
+  margin: 0px 12pt;
+}
+
+.handle {
+  cursor: pointer;
+}
+
+div.resourceDisplay {
+  border-bottom: 0.5pt solid gainsboro;
+  border-radius: 0px;
+  color: black;
+}
+
+div.resourceDisplay .label {
+  color: darkgray;
+  margin: 0px;
+  padding: 0px;
+  text-align: left;
+}
+
+.control-box {
+  text-align: right;
+}
+
+div.resourceDisplay button.btn {
+  /*color: rgba(80, 90, 250, 1);*/
+  background-color: transparent;
+  border-radius: 50%;
+  width: 2em;
+  padding: 2pt;
+}
+
+.header span {
+  /*background-color: rgba(80, 90, 250, 1);
+  color: gainsboro;*/
+  font-size: 130%;
+}

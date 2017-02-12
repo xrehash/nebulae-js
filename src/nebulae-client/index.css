@@ -1,153 +1,190 @@
-body {
-    font-size: 14pt;
-    font-family: 'Halant', serif;
-}
-
-#screen {
-    background-color: rgba(220, 230, 240, 0.3);
-    padding: 16px;
-}
-
-#screenMenu {}
-
-#mast {
-    background-color: rgba(200, 160, 80, 1);
-    color: white;
-    background-image: url('resources/nebulae-crop.jpg');
-    border-bottom: 0.5pt solid rgb(120, 120, 120);
-    border-collapse: collapse;
-}
-
-#banner {
-    height: 80px;
-    font-family: 'Gabriela', Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    font-weight: 500;
-    font-size: 48pt;
-}
-
-#header {
-    font-family: 'Gruppo', Arial, cursive;
-    font-weight: 500;
-    font-size: 28pt;
-    background-color: rgba(50, 50, 50, 0.710);
-}
-
-#middleBlock {
-    min-height: 100px;
-    background-color: rgb(255, 255, 255);
-    border: 0.25pt solid rgb(120, 120, 120);
-    border-collapse: collapse;
-}
-
-#page {
-    font-size: 10pt;
-}
-
-.panel {
-    margin: 16px;
-    padding: 4px;
-}
-
-#sideBar {
-    border-left: 0.25pt solid rgb(120, 120, 120);
-    border-collapse: collapse;
-    /*background-color: rgb(220,220 ,220);
+    html,
+    body {
+        font-size: 14pt;
+        font-family: 'Halant', serif;
+        background: rgb(205, 220, 222);
+        background-repeat: no-repeat;
+        /*background-image: linear-gradient(to bottom, rgba(250, 220, 222, 0.5) 0% rgba(115, 120, 112, 0.5) 99%);**/
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    
+    #screen {
+        background-color: rgba(245, 250, 240, 1);
+        padding: 16px;
+        margin: 10pt;
+        border-radius: 6pt;
+    }
+    
+    #screenMenu {
+        font-size: 12pt;
+        background-color: white;
+        color: black;
+        font-family: 'Raleway', Arial, cursive;
+        text-align: right;
+    }
+    
+    #screenMenu .pill {
+        margin-top: 6pt;
+        margin-left: 5pt;
+        margin-right: 1pt;
+        padding: 4pt 6pt;
+        cursor: pointer;
+    }
+    
+    #screenMenu .pill:hover {
+        color: deepskyblue;
+    }
+    
+    #mast {
+        background-color: rgba(200, 160, 180, 1);
+        color: white;
+        background-image: url('resources/blue-abstract.jpg');
+        border-bottom: 0.5pt solid rgb(120, 120, 120);
+        border-collapse: collapse;
+    }
+    
+    #banner h1 {
+        display: inline-block;
+        padding: 5pt;
+        width: 300pt;
+        line-height: 30px;
+        margin-left: 30px;
+        background-color: rgba(60, 60, 60, 1);
+        /*font-family: 'Gabriela', Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;*/
+        font-family: 'Calibri', sans-serif;
+        font-weight: 100;
+        font-size: 20pt;
+        border: 1pt solid white;
+        border-radius: 5pt;
+    }
+    
+    #header {
+        font-family: 'Gruppo', Arial, cursive;
+        font-weight: 200;
+        font-size: 10pt;
+        background-color: rgba(50, 50, 50, 0.80);
+    }
+    
+    #titleBlock {
+        padding-left: 3pt;
+    }
+    
+    #middleBlock {
+        min-height: 100px;
+        /*background-color: rgb(255, 255, 255);*/
+        border: none;
+        border-top: 0.25pt solid rgb(120, 120, 120);
+        border-collapse: collapse;
+    }
+    
+    #page {
+        font-size: 10pt;
+    }
+    
+    .panel {
+        margin: 16px;
+        padding: 4px;
+    }
+    
+    #sideBar {
+        border-left: 0.25pt solid rgb(120, 120, 120);
+        border-collapse: collapse;
+        /*background-color: rgb(220,220 ,220);
     border: 0.5pt solid rgb(120,120 ,120);
     border-collapse: collapse;*/
-}
-
-#footer {
-    border: 0.25pt solid rgb(120, 120, 120);
-    border-collapse: collapse;
-    font-size: 70%;
-}
-
-label,
-legend,
-dt {
-    font-family: Arial, Helvetica, sans-serif !important;
-    font-size: 8pt;
-    font-weight: 400;
-    color: rgb(120, 120, 120);
-}
-
-.heading,
-.table-title {
-    font-family: 'Raleway', Arial, cursive;
-    font-weight: 500;
-    font-size: 3ex;
-    border-bottom: dashed 0.5pt rgb(120, 120, 120);
-}
-
-input,
-button,
-textarea,
-select {
-    border: 0.5pt solid rgb(120, 120, 120);
-    font-family: Arial, Helvetica, sans-serif !important;
-    border-radius: 3pt;
-    padding: 3pt;
-}
-
-#page button.btn {
-    font-size: 200% !important;
-}
-
-#page button.btn-xs {
-    font-size: 60% !important;
-}
-
-div.schema-editor legend {
-    padding: 4pt;
-    color: rgb(0, 0, 0);
-    background-color: rgba(220, 220, 220, 0.41);
-    border-top-left-radius: 6pt;
-    border-top-right-radius: 6pt;
-}
-
-div.schema-editor button {
-    font-size: 8pt;
-    color: rgb(22, 200, 240);
-}
-
-th.heading {
-    font-size: 9pt;
-    padding: 0;
-}
-
-#propertyTable {
-    color: rgb(0, 0, 0);
-    font-size: 9pt;
-    margin-top: 15pt;
-    background-color: rgba(250, 200, 0, 0.3);
-}
-
-#propertyTable td,
-.pickList td {
-    font-family: consolas, 'Courier Prime', 'Courier New', Courier, monospace;
-}
-
-.displayed {
-    display: initial;
-}
-
-.hidden {
-    display: none;
-}
-
-.searchResult {
-    font-family: 'Raleway', Arial, cursive;
-    font-weight: 500;
-    font-size: 10pt;
-    cursor: pointer;
-    width: 100%;
-}
-
-.btn-sexy {
-    text-align: center;
-    cursor: pointer;
-}
-
-tr.selectedRow td {
-    background-color: orange;
-}
+    }
+    
+    #footer {
+        font-family: 'Gruppo', Arial, cursive;
+        border-top: 0.25pt solid rgb(120, 120, 120);
+        border-collapse: collapse;
+        font-size: 9pt;
+    }
+    
+    label,
+    legend,
+    dt {
+        font-family: Arial, Helvetica, sans-serif !important;
+        font-size: 8pt;
+        font-weight: 400;
+        color: rgb(120, 120, 120);
+    }
+    
+    .heading,
+    .table-title {
+        font-family: 'Raleway', Arial, cursive;
+        font-weight: 500;
+        font-size: 3ex;
+        border-bottom: dashed 0.5pt rgb(120, 120, 120);
+    }
+    
+    input,
+    button,
+    textarea,
+    select {
+        border: 0.5pt solid rgb(120, 120, 120);
+        font-family: Arial, Helvetica, sans-serif !important;
+        border-radius: 3pt;
+        padding: 3pt;
+    }
+    
+    #page button.btn-xs {
+        font-size: 100% !important;
+    }
+    
+    div.schema-editor legend {
+        padding: 4pt;
+        color: rgb(0, 0, 0);
+        background-color: rgba(220, 220, 220, 0.41);
+        border-top-left-radius: 6pt;
+        border-top-right-radius: 6pt;
+    }
+    
+    div.schema-editor button {
+        font-size: 8pt;
+        color: rgb(22, 200, 240);
+    }
+    
+    th.heading {
+        font-size: 9pt;
+        padding: 0;
+    }
+    
+    #propertyTable {
+        color: rgb(0, 0, 0);
+        font-size: 9pt;
+        margin-top: 15pt;
+        background-color: rgba(250, 200, 0, 0.3);
+    }
+    
+    #propertyTable td,
+    .pickList td {
+        font-family: consolas, 'Courier Prime', 'Courier New', Courier, monospace;
+    }
+    
+    .displayed {
+        display: initial;
+    }
+    
+    .hidden {
+        display: none;
+    }
+    
+    .searchResult {
+        font-family: 'Raleway', Arial, cursive;
+        font-weight: 500;
+        font-size: 10pt;
+        cursor: pointer;
+        width: 100%;
+    }
+    
+    .btn-sexy {
+        text-align: center;
+        cursor: pointer;
+    }
+    
+    tr.selectedRow td {
+        background-color: orange;
+    }

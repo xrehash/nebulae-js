@@ -1,10 +1,58 @@
 <div class="component container-fluid">
   <div class="row">
-    <div class="col-sm-5 panel panel-info" data-bind="">
+    <div class="col-sm-12 panel panel-info" data-bind="">
       <h2 class="heading">Resources</h2>
-      <div class="">
-        <select name="resourceType" data-bind="value:resourceType,optionsText:'name',optionsCaption:'Choose Type...',valueAllowUnset:true,options:listResourceTypes"></select>
-        <button class="btn-xs"><em class="fa fa-pencil-square-o"></em> create</button>
+      <div class="act">
+        <select class="bigItem" name="resourceType" data-bind="value:resourceType,optionsText:'name',optionsCaption:'Choose Type...',valueAllowUnset:true,options:listResourceTypes"></select>
+        <span class="btn" data-bind="click:createResourceClick"><em class="fa fa-pencil-square-o"></em> create</span>
+        <span class="btn" data-bind="click:searchByResourceTypeClick"><em class="fa fa-search"></em> search</span>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div data-bind="with:resourceEditor">
+      <div class="panel col-sm-6 form comp" data-bind="visible:isVisible">
+        <div class="text-right">
+          <span data-bind="click:cancelClick" class="btn btn-xs btn-danger"><em class="fa fa-ban"></em> cancel</span>
+          <span data-bind="click:saveClick" class="btn btn-xs btn-success"><em class="fa fa-check"></em> save</span>
+        </div>
+        <h4 class="h4" data-bind="text:resourceType().name"></h4>
+        <p class="" data-bind="text:resource()._id"></p>
+        <label>Name</label>
+        <input class="" type="text" data-bind="value:resource().name" />
+        <ol data-bind="foreach:resourceType().schema">
+          <li>
+            <label data-bind="text: Object.getOwnPropertyNames($data)[0], attr:{for:$parent.propId(Object.getOwnPropertyNames($data)[0])}"></label>
+            <input data-bind="value:($parent.resource()[Object.getOwnPropertyNames($data)[0]]), attr:{id:$parent.propId(Object.getOwnPropertyNames($data)[0]), type:$parent.propType(Object.getOwnPropertyNames($data)[0])}"
+            />
+            <!-- <input data-bind="text: $data[Object.getOwnPropertyNames($data)[0]]"></li> -->
+          </li>
+        </ol>
+      </div>
+    </div>
+    <div class="searchResultsPanel panel col-sm-6 comp" data-bind="visible:showResults">
+      <h2 class="heading">Search Results for <span data-bind="text:searchTarget"></span></h2>
+      <table class="table table-bordered table-condensed table-responsive table-hover results">
+        <thead>
+          <tr>
+            <th>Name</th>
+          </tr>
+        </thead>
+        <tbody data-bind="foreach:searchResults">
+          <tr data-bind="click:$parent.rowClicked, css:{'selected': ($parent.selectedResource() == $data)}">
+            <td><span data-bind="text:name"></span></td>
+          </tr>
+        </tbody>
+        <tfoot></tfoot>
+      </table>
+    </div>
+    <div class="resourceViewer panel panel-success col-sm-6 comp" data-bind="visible:(selectedResource()?true:false)">
+      <h4 class="h4 heading" data-bind="text:selectedResource()?selectedResource().name + ' Details':''"></h4>
+      <div data-bind="with:selectedResourceDetail">
+        <dl data-bind="foreach:Object.getOwnPropertyNames($data)">
+          <dt data-bind="text:$data"></dt>
+          <dd data-bind="text:($parent)[$data]"></dd>
+        </dl>
       </div>
     </div>
   </div>

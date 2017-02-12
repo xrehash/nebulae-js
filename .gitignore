@@ -36,3 +36,4 @@ jspm_packages
 # Optional REPL history
 .node_repl_history
 src/nebulae-client/bower_components/
+.vscode/
